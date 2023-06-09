@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.vettime2.modelos.Cliente_mascota;
+import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Tarea;
 import com.example.vettime2.modelos.TurnosPorTarea;
 import com.example.vettime2.request.ApiClient;
@@ -154,7 +155,7 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
                                 List<TurnosPorTarea> turnos = response.body();
                                 tiempoTarea = turnos.get(0).getTiempoTarea();
                                 horarios.addAll(utils.getTurnoTarea(turnos, nombreDia));
-                                filtraTurnosOcupados(dia, mes, anio, horarios, tarea);
+                                filtraTurnosOcupados(horarios, tarea);
                             }
                         }
                     }
@@ -169,11 +170,34 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
         }
     }
 
-    public void filtraTurnosOcupados(int dia, int mes, int anio,List<String> turnos,String tarea) {
-
+    public void filtraTurnosOcupados(List<String> turnos,String tarea) {
+        List<Consulta> consultas = new ArrayList<>();
+        try {
+            Call<List<Consulta>> call = end.obtenerConsultasPorFecha(fecha, tarea);
+            call.enqueue(new Callback<List<Consulta>>() {
+                @Override
+                public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
+                    if (response.body() != null) {
+                        consultas.addAll(response.body());
+                        List<String> intervalosConsultas = utils.getTurnosEntregados(consultas);
+                        HashSet<String> hashSet = new HashSet<>(utils.getTurnosNoEntregados(turnos, intervalosConsultas));
+                        ArrayList<String> arrayList = new ArrayList<>(hashSet);
+                        Collections.sort(arrayList);
+                        mHorarios.setValue(arrayList);
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<Consulta>> call, Throwable t) {
+                    Log.d("salida 1", t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Log.d("salida 2", e.getMessage());
+        }
     }
 
     public void crearConsulta(String tarea, String hora, String mascota) {
-
+       String tiempoFin = utils.sumaHoraAFecha(hora, tiempoTarea, fecha);
+       Log.d("salida", tiempoFin);
     }
 }

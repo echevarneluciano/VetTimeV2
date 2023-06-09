@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -71,7 +72,7 @@ public class Utils {
                     tiempoFin = tarea.getSunday_fin();
                     break;
             }
-
+            if (tiempoInicio != null && tiempoFin != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime inicio = LocalTime.parse(tiempoInicio, formatter);
             LocalTime fin = LocalTime.parse(tiempoFin, formatter);
@@ -82,18 +83,69 @@ public class Utils {
                 tiempoActual = tiempoActual.plusMinutes(30);
             }
         }
-
+        }
         return intervalos;
 
     }
 
     public List<String> getTurnosEntregados(List<Consulta> consultas) {
-        return null;
+        List<String> intervalos = new ArrayList<>();
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        for (Consulta consulta : consultas) {
+            String tiempoInicioTexto = consulta.getTiempoInicio();
+            String tiempoFinTexto = consulta.getTiempoFin();
+
+            LocalDateTime tiempoInicio = LocalDateTime.parse(tiempoInicioTexto, inputFormatter);
+            LocalDateTime tiempoFin = LocalDateTime.parse(tiempoFinTexto, inputFormatter);
+
+            LocalDateTime intervaloActual = tiempoInicio;
+            while (intervaloActual.isBefore(tiempoFin)) {
+                intervalos.add(intervaloActual.format(outputFormatter));
+                intervaloActual = intervaloActual.plusMinutes(30);
+            }
+        }
+
+        return intervalos;
     }
 
     public List<String> getTurnosNoEntregados(List<String> disponibles, List<String> entregados) {
+        List<String> lista1 = new ArrayList<>(entregados);
+        List<String> lista2 = new ArrayList<>(disponibles);
+        for (String intervalo : lista1) {
+            for (int i = 0; i < lista2.size(); i++) {
+                if (intervalo.equals(lista2.get(i))) {
+                    lista2.remove(i);
+                    i--;
+                }
+            }
+        }
+        return lista2;
+    }
 
-        return null;
+    public String sumaHoraAFecha(String time1, String time2,String date) {
+
+        // Obtener objetos LocalTime de las cadenas de hora
+        LocalTime hora1 = LocalTime.parse(time1);
+        LocalTime hora2 = LocalTime.parse(time2);
+
+        // Obtener objeto LocalDate de la cadena de fecha
+        LocalDate fecha = LocalDate.parse(date);
+
+        // Combina la fecha y la hora utilizando LocalDateTime
+        LocalDateTime dateTime1 = LocalDateTime.of(fecha, hora1);
+        LocalDateTime dateTime2 = LocalDateTime.of(fecha, hora2);
+
+        // Suma las dos fechas y obtiene el resultado
+        LocalDateTime resultado = dateTime1.plusHours(dateTime2.getHour())
+                .plusMinutes(dateTime2.getMinute())
+                .plusSeconds(dateTime2.getSecond());
+
+        // Formatea el resultado en una cadena con el formato deseado
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return resultado.format(formatter);
     }
 
 }
