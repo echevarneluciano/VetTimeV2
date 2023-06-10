@@ -197,7 +197,36 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
     }
 
     public void crearConsulta(String tarea, String hora, String mascota) {
-       String tiempoFin = utils.sumaHoraAFecha(hora, tiempoTarea, fecha);
-       Log.d("salida", tiempoFin);
+        if(tarea.equals("1-Seleccione tarea...") || mascota.equals("1-Seleccione mascota...")) {
+            Toast.makeText(context, "Complete todos los campos", Toast.LENGTH_LONG).show();
+        }else {
+        String tiempoFin = utils.sumaHoraAFechaFin(hora, tiempoTarea, fecha);
+        String tiempoInicio = utils.sumaHoraAFecha(hora, fecha);
+        int mascotaid = clientes_mascotas.stream().filter(c -> c.getMascota().getNombre().equals(mascota)).findFirst().get().getId();
+        Consulta consulta = new Consulta();
+
+        consulta.setCliente_mascotaId(mascotaid);
+        consulta.setTiempoInicio(tiempoInicio);
+        consulta.setTiempoFin(tiempoFin);
+        Log.d("salida", consulta.toString());
+try {
+        Call<Consulta> call = end.nuevaConsultas(consulta, tarea);
+        Log.d("salida", call.request().url().toString());
+        call.enqueue(new Callback<Consulta>() {
+            @Override
+            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                if (response.body() != null) {
+                    Toast.makeText(context, "Consulta agendada, fecha: "+response.body().getTiempoInicio(), Toast.LENGTH_SHORT).show();
+                    mReset.setValue(true);
+                }
+            }
+            @Override
+            public void onFailure(Call<Consulta> call, Throwable t) {
+                Log.d("salida 1", t.getMessage());
+            }
+        });
+    } catch (Exception e) {
+        Log.d("salida 2", e.getMessage());
     }
+}}
 }

@@ -124,7 +124,7 @@ public class Utils {
         return lista2;
     }
 
-    public String sumaHoraAFecha(String time1, String time2,String date) {
+    public String sumaHoraAFechaFin(String time1, String time2,String date) {
 
         // Obtener objetos LocalTime de las cadenas de hora
         LocalTime hora1 = LocalTime.parse(time1);
@@ -143,9 +143,20 @@ public class Utils {
                 .plusSeconds(dateTime2.getSecond());
 
         // Formatea el resultado en una cadena con el formato deseado
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         return resultado.format(formatter);
+    }
+
+    public String sumaHoraAFecha(String hora   , String fecha) {
+
+        LocalTime horaParse = LocalTime.parse(hora);
+        LocalDate fechaParse = LocalDate.parse(fecha);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        LocalDateTime dateTime = LocalDateTime.of(fechaParse, horaParse);
+
+        return dateTime.format(formatter);
     }
 
 }
