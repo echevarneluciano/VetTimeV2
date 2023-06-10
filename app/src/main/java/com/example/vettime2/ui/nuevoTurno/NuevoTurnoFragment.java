@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,38 +27,37 @@ public class NuevoTurnoFragment extends Fragment {
         binding = FragmentNuevoturnoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        nuevoTurnoViewModel.getTareas().observe(getViewLifecycleOwner(), tareas -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, tareas);
-            binding.spTarea.setAdapter(adapter);
-        });
-
-        nuevoTurnoViewModel.getMascotas().observe(getViewLifecycleOwner(), mascotas -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mascotas);
-            binding.spMascota.setAdapter(adapter);
-        });
-
-        nuevoTurnoViewModel.getHorarios().observe(getViewLifecycleOwner(), horarios -> {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, horarios);
-            binding.spHorario.setAdapter(adapter);
-        });
-
-        binding.dtCalendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            nuevoTurnoViewModel.setHorarios(dayOfMonth, month+1, year,binding.spTarea.getSelectedItem().toString());
-        });
-
         binding.btConfirma.setOnClickListener(v -> {
-            nuevoTurnoViewModel.crearConsulta(binding.spTarea.getSelectedItem().toString(),
-                    binding.spHorario.getSelectedItem().toString(), binding.spMascota.getSelectedItem().toString());
+
         });
 
-        nuevoTurnoViewModel.getReset().observe(getViewLifecycleOwner(), reset -> {
-            resetCampos();
-        });
+    nuevoTurnoViewModel.getTareas().observe(getViewLifecycleOwner(), tareas -> {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, tareas);
+        binding.spTipoConsulta.setAdapter(adapter);
+    });
 
-        nuevoTurnoViewModel.setTareas();
-        nuevoTurnoViewModel.setMascotas();
+    nuevoTurnoViewModel.getEmpleados().observe(getViewLifecycleOwner(), empleados -> {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, empleados);
+        binding.spEmpleado.setAdapter(adapter);
+    });
 
+    binding.spTipoConsulta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String item = parent.getItemAtPosition(position).toString();
+            nuevoTurnoViewModel.setmEmpleados(item);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
 
+        }
+    });
+
+    binding.btConfirma.setOnClickListener(v -> {
+        nuevoTurnoViewModel.setConfirmado(binding.spTipoConsulta.getSelectedItem().toString(),binding.spEmpleado.getSelectedItem().toString(),this.getActivity());
+    });
+
+    nuevoTurnoViewModel.setmTareas();
 
         return root;
     }
@@ -67,10 +68,4 @@ public class NuevoTurnoFragment extends Fragment {
         binding = null;
     }
 
-    public void resetCampos(){
-        binding.spTarea.setSelection(0);
-        binding.spHorario.setSelection(0);
-        binding.spMascota.setSelection(0);
-        binding.dtCalendario.setDate(System.currentTimeMillis());
-    }
 }

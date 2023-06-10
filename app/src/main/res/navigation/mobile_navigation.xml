@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.vettime2.ui.nuevoTurno.NuevoTurnoFragment"
         android:label="@string/title_nuevoturno"
-        tools:layout="@layout/fragment_nuevoturno" />
+        tools:layout="@layout/fragment_nuevoturno" >
+        <action
+            android:id="@+id/action_navigation_home_to_seleccionTurnoFragment"
+            app:destination="@id/seleccionTurnoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +26,13 @@
         android:name="com.example.vettime2.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/seleccionTurnoFragment"
+        android:name="com.example.vettime2.ui.nuevoTurno.SeleccionTurnoFragment"
+        android:label="fragment_seleccion_turno"
+        tools:layout="@layout/fragment_seleccion_turno" >
+        <action
+            android:id="@+id/action_seleccionTurnoFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

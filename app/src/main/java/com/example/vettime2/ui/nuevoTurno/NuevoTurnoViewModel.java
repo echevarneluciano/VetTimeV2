@@ -1,7 +1,10 @@
 package com.example.vettime2.ui.nuevoTurno;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,9 +13,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.Navigation;
 
+import com.example.vettime2.R;
 import com.example.vettime2.modelos.Cliente_mascota;
 import com.example.vettime2.modelos.Consulta;
+import com.example.vettime2.modelos.Empleado_tarea;
 import com.example.vettime2.modelos.Tarea;
 import com.example.vettime2.modelos.TurnosPorTarea;
 import com.example.vettime2.request.ApiClient;
@@ -33,98 +39,54 @@ import retrofit2.Response;
 public class NuevoTurnoViewModel extends AndroidViewModel {
 
     private  MutableLiveData<List<String>> mTareas;
-    private MutableLiveData<List<String>> mMascotas;
-    private MutableLiveData<List<String>> mHorarios;
-    private MutableLiveData<Boolean> mReset;
-    private List<Tarea> tareasDisponibles;
-    private String fecha;
+    private MutableLiveData<List<String>> mEmpleados;
     private Context context;
-    private String tiempoTarea="00:30:00";
     private List<Cliente_mascota> clientes_mascotas;
     private ArrayList<String> tareas = new ArrayList<>();
-    private ArrayList<String> mascotas = new ArrayList<>();
+    private ArrayList<String> empleados = new ArrayList<>();
+    private ArrayList<Empleado_tarea> empleados_tareas = new ArrayList<>();
     private ApiClient.EndPointVetTime end;
     private Utils utils;
-
-
 
     public NuevoTurnoViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         utils = new Utils();
         end = ApiClient.getEndpointVetTime();
-        tareas.add("1-Seleccione tarea...");
-        mascotas.add("4-Seleccione mascota...");
     }
 
     public LiveData<List<String>> getTareas() {
-        if(mTareas == null) {
-            this.mTareas = new MutableLiveData<>();
+        if (mTareas == null) {
+            mTareas = new MutableLiveData<>();
         }
         return mTareas;
     }
 
-    public LiveData<List<String>> getMascotas() {
-        if(mMascotas == null) {
-            this.mMascotas = new MutableLiveData<>();
+    public LiveData<List<String>> getEmpleados() {
+        if (mEmpleados == null) {
+            mEmpleados = new MutableLiveData<>();
         }
-        return mMascotas;
+        return mEmpleados;
     }
 
-    public LiveData<List<String>> getHorarios() {
-        if(mHorarios == null) {
-            this.mHorarios = new MutableLiveData<>();
-        }
-        return mHorarios;
-    }
-
-    public LiveData<Boolean> getReset() {
-        if(mReset == null) {
-            this.mReset = new MutableLiveData<>();
-        }
-        return mReset;
-    }
-
-    public void setTareas() {
-     try {
-        Call<List<Tarea>> call = end.obtenerTareas();
-        call.enqueue(new Callback<List<Tarea>>() {
-            @Override
-            public void onResponse(Call<List<Tarea>> call, Response<List<Tarea>> response) {
-                if (response.body() != null) {
-                    response.body().forEach(tarea -> {
-                        tareas.add(tarea.getTarea());
-                    });
-                    mTareas.setValue(tareas);
-                    tareasDisponibles = response.body();
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Tarea>> call, Throwable t) {
-                Log.d("salida 1", t.getMessage());
-            }
-        });
-    } catch (Exception e){
-        Log.d("salida 2", e.getMessage());
-    }
-    }
-
-    public void setMascotas() {
+    public void setmTareas() {
         try {
-            Call<List<Cliente_mascota>> call = end.obtenerClientesMascotas();
-            call.enqueue(new Callback<List<Cliente_mascota>>() {
+            Call<List<Empleado_tarea>> call = end.obtenerEmpleadosTareas();
+            call.enqueue(new Callback<List<Empleado_tarea>>() {
                 @Override
-                public void onResponse(Call<List<Cliente_mascota>> call, Response<List<Cliente_mascota>> response) {
+                public void onResponse(Call<List<Empleado_tarea>> call, Response<List<Empleado_tarea>> response) {
                     if (response.body() != null) {
-                        response.body().forEach(clientemascota -> {
-                            mascotas.add(clientemascota.getMascota().getNombre());
-                        });
-                        clientes_mascotas = response.body();
-                        mMascotas.setValue(mascotas);
+                     response.body().forEach(empleado_tarea -> {
+                         tareas.add(empleado_tarea.getTarea().getTarea());
+                     });
+                     HashSet<String> tareasSet = new HashSet<>(tareas);
+                     empleados_tareas.addAll(response.body());
+                     tareas = new ArrayList<>(tareasSet);
+                     mTareas.setValue(tareas);
                     }
                 }
                 @Override
-                public void onFailure(Call<List<Cliente_mascota>> call, Throwable t) {
+                public void onFailure(Call<List<Empleado_tarea>> call, Throwable t) {
                     Log.d("salida 1", t.getMessage());
                 }
             });
@@ -133,100 +95,21 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
         }
     }
 
-    public void setHorarios(int dia, int mes, int anio,String tarea) {
-        String nombreDia = utils.getDate(anio, mes, dia);
-        fecha = utils.convertirFechaMysql(anio, mes, dia);
-        if(tarea.equals("1-Seleccione tarea...")) {
-            Toast.makeText(context, "Seleccione una tarea", Toast.LENGTH_LONG).show();
-        }else {
-            Tarea tareaSeleccionada = tareasDisponibles.stream().filter(t -> t.getTarea().equals(tarea)).findFirst().get();
-            ArrayList<String> horarios = new ArrayList<>();
-            mHorarios.setValue(horarios);
-            try {
-                Call<List<TurnosPorTarea>> call = end.obtenerTurnosPorFecha(tareaSeleccionada, fecha);
-                Log.d("salida", call.request().url().toString());
-                call.enqueue(new Callback<List<TurnosPorTarea>>() {
-                    @Override
-                    public void onResponse(Call<List<TurnosPorTarea>> call, Response<List<TurnosPorTarea>> response) {
-                        if (response.body() != null) {
-                            if (response.body().isEmpty()) {
-                                Toast.makeText(context, "No hay turnos para esta tarea", Toast.LENGTH_LONG).show();
-                            }else {
-                                List<TurnosPorTarea> turnos = response.body();
-                                tiempoTarea = turnos.get(0).getTiempoTarea();
-                                horarios.addAll(utils.getTurnoTarea(turnos, nombreDia));
-                                filtraTurnosOcupados(horarios, tarea);
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<TurnosPorTarea>> call, Throwable t) {
-                        Log.d("salida 1", t.getMessage());
-                    }
-                });
-            } catch (Exception e) {
-                Log.d("salida 2", e.getMessage());
+    public void setmEmpleados(String tarea) {
+        empleados.clear();
+        mEmpleados.setValue(empleados);
+        empleados_tareas.forEach(empleado_tarea -> {
+            if (empleado_tarea.getTarea().getTarea().equals(tarea)) {
+                empleados.add(empleado_tarea.getEmpleado().getNombre()+" "+empleado_tarea.getEmpleado().getApellido());
             }
-        }
-    }
-
-    public void filtraTurnosOcupados(List<String> turnos,String tarea) {
-        List<Consulta> consultas = new ArrayList<>();
-        try {
-            Call<List<Consulta>> call = end.obtenerConsultasPorFecha(fecha, tarea);
-            call.enqueue(new Callback<List<Consulta>>() {
-                @Override
-                public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
-                    if (response.body() != null) {
-                        consultas.addAll(response.body());
-                        List<String> intervalosConsultas = utils.getTurnosEntregados(consultas);
-                        HashSet<String> hashSet = new HashSet<>(utils.getTurnosNoEntregados(turnos, intervalosConsultas));
-                        ArrayList<String> arrayList = new ArrayList<>(hashSet);
-                        Collections.sort(arrayList);
-                        mHorarios.setValue(arrayList);
-                    }
-                }
-                @Override
-                public void onFailure(Call<List<Consulta>> call, Throwable t) {
-                    Log.d("salida 1", t.getMessage());
-                }
-            });
-        } catch (Exception e) {
-            Log.d("salida 2", e.getMessage());
-        }
-    }
-
-    public void crearConsulta(String tarea, String hora, String mascota) {
-        if(tarea.equals("1-Seleccione tarea...") || mascota.equals("1-Seleccione mascota...")) {
-            Toast.makeText(context, "Complete todos los campos", Toast.LENGTH_LONG).show();
-        }else {
-        String tiempoFin = utils.sumaHoraAFechaFin(hora, tiempoTarea, fecha);
-        String tiempoInicio = utils.sumaHoraAFecha(hora, fecha);
-        int mascotaid = clientes_mascotas.stream().filter(c -> c.getMascota().getNombre().equals(mascota)).findFirst().get().getId();
-        Consulta consulta = new Consulta();
-
-        consulta.setCliente_mascotaId(mascotaid);
-        consulta.setTiempoInicio(tiempoInicio);
-        consulta.setTiempoFin(tiempoFin);
-        Log.d("salida", consulta.toString());
-try {
-        Call<Consulta> call = end.nuevaConsultas(consulta, tarea);
-        Log.d("salida", call.request().url().toString());
-        call.enqueue(new Callback<Consulta>() {
-            @Override
-            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
-                if (response.body() != null) {
-                    Toast.makeText(context, "Consulta agendada, fecha: "+response.body().getTiempoInicio(), Toast.LENGTH_SHORT).show();
-                    mReset.setValue(true);
-                }
-            }
-            @Override
-            public void onFailure(Call<Consulta> call, Throwable t) {
-                Log.d("salida 1", t.getMessage());
-            }
+            mEmpleados.setValue(empleados);
         });
-    } catch (Exception e) {
-        Log.d("salida 2", e.getMessage());
     }
-}}
+
+    public void setConfirmado(String tarea, String empleado, Activity activity) {
+        Bundle bundle = new Bundle();
+        bundle.putString("tarea", tarea);
+        bundle.putString("empleado", empleado);
+        Navigation.findNavController(activity, R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_home_to_seleccionTurnoFragment,bundle);
+    }
 }

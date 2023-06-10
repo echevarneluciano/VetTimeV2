@@ -8,75 +8,57 @@
 
 
     <Spinner
-        android:id="@+id/spMascota"
+        android:id="@+id/spEmpleado"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spHorario" />
-
-    <Spinner
-        android:id="@+id/spHorario"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+    <Button
+        android:id="@+id/btConfirma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Confirmar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spEmpleado" />
+
+    <Spinner
+        android:id="@+id/spTipoConsulta"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="350dp"
         android:layout_height="30dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="5dp"
-        android:text="3-Seleccione horario de consulta:"
+        android:layout_marginTop="50dp"
+        android:text="Seleccione profesional:"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dtCalendario" />
+        app:layout_constraintTop_toBottomOf="@+id/spTipoConsulta" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="350dp"
         android:layout_height="30dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="5dp"
-        android:text="2-Seleccione dia:"
+        android:layout_marginTop="80dp"
+        android:text="Seleccione el tipo de consulta:"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spTarea" />
-
-    <Spinner
-        android:id="@+id/spTarea"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CalendarView
-        android:id="@+id/dtCalendario"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/btConfirma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Confirmar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spMascota" />
 </androidx.constraintlayout.widget.ConstraintLayout>
