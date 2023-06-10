@@ -33,8 +33,9 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     private String fecha;
     private Utils utils;
     private ApiClient.EndPointVetTime end;
-    private String tiempoTarea = "00:30:00";
+    private String tiempoTarea;
     private List<Cliente_mascota> clientes_mascotas;
+    private ArrayList<String> horariosDisponibles;
 
 
     public SeleccionTurnoViewModel(@NonNull Application application) {
@@ -100,6 +101,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
                         consultas.addAll(response.body());
                         List<String> intervalosConsultas = utils.getTurnosEntregados(consultas);
                         ArrayList<String> arrayList = new ArrayList<>(utils.getTurnosNoEntregados(turnos, intervalosConsultas));
+                        horariosDisponibles = arrayList;
                         mHorarios.setValue(arrayList);
                     }
                 }
@@ -138,5 +140,40 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
             Log.d("salida 2", e.getMessage());
         }
     }
+
+    public void crearConsulta(String empleado, String hora, String mascota) {
+            String tiempoFin = utils.sumaHoraAFechaFin(hora, tiempoTarea, fecha);
+            String tiempoInicio = utils.sumaHoraAFecha(hora, fecha);
+            int mascotaid = clientes_mascotas.stream().filter(c -> c.getMascota().getNombre().equals(mascota)).findFirst().get().getId();
+            Consulta consulta = new Consulta();
+            consulta.setCliente_mascotaId(mascotaid);
+            consulta.setTiempoInicio(tiempoInicio);
+            consulta.setTiempoFin(tiempoFin);
+            Log.d("salida", consulta.toString());
+
+            List<String> lapsoTarea = new ArrayList<>();
+            lapsoTarea = utils.lapsoTarea(hora, tiempoTarea);
+            if (!horariosDisponibles.containsAll(lapsoTarea)) {
+                Toast.makeText(context, "La tarea podria demorar tiempo de turnos ocupados. Seleccione otro horario.", Toast.LENGTH_LONG).show();;
+            }else {
+            try {
+                Call<Consulta> call = end.nuevaConsultas(consulta, empleado);
+                Log.d("salida", call.request().url().toString());
+                call.enqueue(new Callback<Consulta>() {
+                    @Override
+                    public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                        if (response.body() != null) {
+                            Toast.makeText(context, "Consulta agendada, fecha: "+response.body().getTiempoInicio(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Consulta> call, Throwable t) {
+                        Log.d("salida 1", t.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("salida 2", e.getMessage());
+            }
+}}
 
 }

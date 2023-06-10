@@ -102,7 +102,9 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
             if (empleado_tarea.getTarea().getTarea().equals(tarea)) {
                 empleados.add(empleado_tarea.getEmpleado().getNombre()+" "+empleado_tarea.getEmpleado().getApellido());
             }
-            mEmpleados.setValue(empleados);
+        HashSet<String> empleadosSet = new HashSet<>(empleados);
+        empleados = new ArrayList<>(empleadosSet);
+        mEmpleados.setValue(empleados);
         });
     }
 

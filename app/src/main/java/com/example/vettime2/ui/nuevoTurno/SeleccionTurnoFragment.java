@@ -51,6 +51,10 @@ public class SeleccionTurnoFragment extends Fragment {
             binding.spMascota.setAdapter(adapter);
         });
 
+        binding.btConfirmaConsulta.setOnClickListener(v -> {
+           mViewModel.crearConsulta(empleado,binding.spHorario.getSelectedItem().toString(),binding.spMascota.getSelectedItem().toString());
+        });
+
         mViewModel.setMascotas();
 
         return root;

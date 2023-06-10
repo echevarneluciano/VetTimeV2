@@ -59,8 +59,8 @@ public class ApiClient {
         @GET("Consultas/Turnos/{fecha}/{empleado}")
         Call<List<Consulta>> obtenerConsultasPorFecha(@Path("fecha") String fecha, @Path("empleado") String empleado);
 
-        @POST("Consultas/{tarea}")
-        Call<Consulta> nuevaConsultas(@Body Consulta consulta, @Path("tarea") String tarea);
+        @POST("Consultas/{empleado}")
+        Call<Consulta> nuevaConsultas(@Body Consulta consulta, @Path("empleado") String empleado);
 
     }
 

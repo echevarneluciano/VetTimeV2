@@ -159,4 +159,24 @@ public class Utils {
         return dateTime.format(formatter);
     }
 
+    public List<String> lapsoTarea(String tiempoInicio, String tiempoFin) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime inicio = LocalTime.parse(tiempoInicio, formatter);
+        LocalTime fin1 = LocalTime.parse(tiempoFin, formatter);
+        LocalTime fin = inicio.plusHours(fin1.getHour())
+                          .plusMinutes(fin1.getMinute())
+                          .plusSeconds(fin1.getSecond())
+                          .minusMinutes(30);
+        inicio = inicio.plusMinutes(30);
+        List<String> intervalos = new ArrayList<>();
+
+        LocalTime tiempoActual = inicio;
+        while (tiempoActual.isBefore(fin)) {
+            intervalos.add(tiempoActual.format(formatter));
+            tiempoActual = tiempoActual.plusMinutes(30);
+        }
+        return intervalos;
+    }
+
 }
