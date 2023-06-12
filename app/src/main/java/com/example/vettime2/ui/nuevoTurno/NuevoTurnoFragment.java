@@ -12,7 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
+import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentNuevoturnoBinding;
 
 public class NuevoTurnoFragment extends Fragment {
@@ -54,7 +57,14 @@ public class NuevoTurnoFragment extends Fragment {
     });
 
     binding.btConfirma.setOnClickListener(v -> {
-        nuevoTurnoViewModel.setConfirmado(binding.spTipoConsulta.getSelectedItem().toString(),binding.spEmpleado.getSelectedItem().toString(),this.getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putString("tarea", binding.spTipoConsulta.getSelectedItem().toString());
+        bundle.putString("empleado", binding.spEmpleado.getSelectedItem().toString());
+        NavOptions op = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setPopUpTo(R.id.navigation_home,true)
+                .build();
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.seleccionTurnoFragment,bundle,op);
     });
 
     nuevoTurnoViewModel.setmTareas();

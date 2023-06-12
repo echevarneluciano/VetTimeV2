@@ -108,10 +108,4 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
         });
     }
 
-    public void setConfirmado(String tarea, String empleado, Activity activity) {
-        Bundle bundle = new Bundle();
-        bundle.putString("tarea", tarea);
-        bundle.putString("empleado", empleado);
-        Navigation.findNavController(activity, R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_home_to_seleccionTurnoFragment,bundle);
-    }
 }
