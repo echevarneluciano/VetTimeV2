@@ -39,7 +39,7 @@ public class LogInActivity extends AppCompatActivity {
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         // Your server's client ID, not your Android client ID.
-                        .setServerClientId(getString(R.string.web_client_id))
+                        .setServerClientId(getString(R.string.web_client_id2))
                         // Only show accounts previously used to sign in.
                         .setFilterByAuthorizedAccounts(true)
                         .build())
@@ -68,7 +68,7 @@ public class LogInActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 // No saved credentials found. Launch the One Tap sign-up flow, or
                                 // do nothing and continue presenting the signed-out UI.
-                                Log.d("salida", e.getLocalizedMessage());
+                                Log.d("salida entra", e.getLocalizedMessage());
                             }
                         });
             }
