@@ -22,7 +22,8 @@ import retrofit2.http.Path;
 public class ApiClient {
 
     //private static final String PATH="http://10.120.10.172:5200/api/";//"http://localhost:5500/api/";
-    private static final String PATH="http://192.168.15.31:5200/api/";
+    //private static final String PATH="http://192.168.15.31:5200/api/";
+    private static final String PATH="http://192.168.15.7:5200/api/";
     private static EndPointVetTime endPointVetTime;
 
     public static EndPointVetTime getEndpointVetTime(){
