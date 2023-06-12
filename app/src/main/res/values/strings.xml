@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">VetTime2</string>
     <string name="title_nuevoturno">+Turno</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_inicio">Inicio</string>
     <string name="title_notifications">Notifications</string>
-    <string name="web_client_id">264929445129-qsf6727uiflq5p5pkbktrt5i1ja83k6u.apps.googleusercontent.com</string>
+    <string name="web_client_id">264929445129-5nunbh64133mvh0r3d1ovilecp5fk0h6.apps.googleusercontent.com</string>
     <string name="web_client_id2">264929445129-4lrvssm6r5kq7rh14qdu3l3m3g3eruub.apps.googleusercontent.com</string>
-</resources>
+    <string name="pr1">264929445129-qsf6727uiflq5p5pkbktrt5i1ja83k6u.apps.googleusercontent.com</string>
+   </resources>
+
+

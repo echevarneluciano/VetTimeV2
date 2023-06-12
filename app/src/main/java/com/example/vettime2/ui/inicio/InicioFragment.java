@@ -1,4 +1,4 @@
-package com.example.vettime2.ui.dashboard;
+package com.example.vettime2.ui.inicio;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.vettime2.databinding.FragmentDashboardBinding;
+import com.example.vettime2.databinding.FragmentInicioBinding;
 
-public class DashboardFragment extends Fragment {
+public class InicioFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentInicioBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        InicioViewModel inicioViewModel =
+                new ViewModelProvider(this).get(InicioViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentInicioBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+
         return root;
     }
 

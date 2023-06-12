@@ -60,11 +60,8 @@ public class NuevoTurnoFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("tarea", binding.spTipoConsulta.getSelectedItem().toString());
         bundle.putString("empleado", binding.spEmpleado.getSelectedItem().toString());
-        NavOptions op = new NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setPopUpTo(R.id.navigation_home,true)
-                .build();
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.seleccionTurnoFragment,bundle,op);
+
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.seleccionTurnoFragment,bundle);
     });
 
     nuevoTurnoViewModel.setmTareas();
