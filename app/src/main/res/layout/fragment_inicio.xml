@@ -7,9 +7,31 @@
     tools:context=".ui.inicio.InicioFragment">
 
     <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" >
+
+        <Button
+            android:id="@+id/btContactoVete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Contacto veterinaria" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="350dp"
-        android:layout_height="150dp"
+        android:layout_height="145dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,7 +47,7 @@
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:layout_marginStart="150dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="55dp"
             android:text="TextView" />
 
         <TextView
@@ -33,17 +55,41 @@
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:layout_marginStart="150dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="95dp"
             android:text="TextView" />
 
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMascotasInicio"
         android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="5dp"
+        android:background="#3F51B5"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="350dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvMascotasInicio" >
+
+        <Button
+            android:id="@+id/btNuevaMascota"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Agragar mascota" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -118,7 +118,6 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     public void setMascotas() {
         ArrayList<String> mascotas = new ArrayList<>();
         try {
-            ApiClient.EndPointVetTime end = ApiClient.getEndpointVetTime();
             Call<List<Cliente_mascota>> call = end.obtenerClientesMascotas();
             call.enqueue(new Callback<List<Cliente_mascota>>() {
                 @Override

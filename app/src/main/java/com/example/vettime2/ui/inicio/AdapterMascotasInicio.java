@@ -1,22 +1,30 @@
 package com.example.vettime2.ui.inicio;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.vettime2.R;
 import com.example.vettime2.modelos.Mascota;
 
 import java.util.List;
 
-public class AdapterMascotasInicio{  //extends RecyclerView.Adapter<AdapterMascotasInicio.ViewHolder> {
+public class AdapterMascotasInicio  extends RecyclerView.Adapter<AdapterMascotasInicio.ViewHolder> {
 
-  /*  private Context context;
+    private Context context;
     private List<Mascota> mascotas;
     private LayoutInflater layoutInflater;
 
@@ -37,43 +45,43 @@ public class AdapterMascotasInicio{  //extends RecyclerView.Adapter<AdapterMasco
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.direccion.setText(inmuebles.get(position).getDireccion()+"");
-        String esta = inmuebles.get(position).isEstado() ? "Activo" : "Inactivo";
-        holder.estado.setText(esta);
+        holder.nombre.setText(mascotas.get(position).getNombre());
+        holder.apellido.setText(mascotas.get(position).getApellido());
+
         Glide.with(context)
-                .load(inmuebles.get(position).getImagen())
+                .load("https://http.cat/images/102.jpg")
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imagen);
     }
 
     @Override
     public int getItemCount() {
-        return inmuebles.size();
+        return mascotas.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView direccion,estado;
+        TextView nombre,apellido;
         ImageView imagen;
         Button btnDetalle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            direccion=itemView.findViewById(R.id.tvDireccion);
-            estado=itemView.findViewById(R.id.tvEstado);
-            imagen=itemView.findViewById(R.id.ivImagen);
-            btnDetalle=itemView.findViewById(R.id.btnDetalle);
+            nombre=itemView.findViewById(R.id.tvNomMascota);
+            apellido=itemView.findViewById(R.id.tvApellidoMascota);
+            imagen=itemView.findViewById(R.id.ivMascota);
+            btnDetalle=itemView.findViewById(R.id.btDetalleMascotaInicio);
 
             btnDetalle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("inmueble", inmuebles.get(getAdapterPosition()));
+                    bundle.putSerializable("mascota", mascotas.get(getAdapterPosition()));
 
-                    Navigation.findNavController( (Activity)context,R.id.nav_host_fragment_content_escritorio).navigate(R.id.action_nav_inmuebles_to_descripcionFragment,bundle);
+                    Navigation.findNavController( (Activity)context,R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_dashboard_to_detalleMascotaFragment,bundle);
                 }
             });
         }
-    }*/
+    }
 
 }
