@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="108dp"
+    android:layout_height="90dp"
+    app:cardBackgroundColor="#2196F3"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
@@ -11,32 +12,24 @@
 
     <TextView
         android:id="@+id/tvNomMascota"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="20dp"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="0dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvApellidoMascota"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="20dp"
         android:text="TextView" />
 
     <ImageView
         android:id="@+id/ivMascota"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/btDetalleMascotaInicio"
-        android:layout_width="124dp"
+        android:layout_width="208dp"
         android:layout_height="50dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="25dp"
         android:text="Detalle"
         android:textSize="10sp" />
 </androidx.cardview.widget.CardView>

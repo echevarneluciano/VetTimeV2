@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.vettime2.databinding.FragmentInicioBinding;
 
 public class InicioFragment extends Fragment {
@@ -26,6 +28,11 @@ public class InicioFragment extends Fragment {
 
         binding = FragmentInicioBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Glide.with(this)
+                .load("https://http.cat/images/207.jpg")
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.ivUsuario);
 
         RecyclerView recyclerView = binding.rvMascotasInicio;
         GridLayoutManager grilla = new GridLayoutManager(getActivity(),1,GridLayoutManager.VERTICAL,false);

@@ -45,8 +45,7 @@ public class AdapterMascotasInicio  extends RecyclerView.Adapter<AdapterMascotas
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.nombre.setText(mascotas.get(position).getNombre());
-        holder.apellido.setText(mascotas.get(position).getApellido());
+        holder.nombre.setText(mascotas.get(position).getNombre()+" "+mascotas.get(position).getApellido());
 
         Glide.with(context)
                 .load("https://http.cat/images/102.jpg")
@@ -60,14 +59,13 @@ public class AdapterMascotasInicio  extends RecyclerView.Adapter<AdapterMascotas
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView nombre,apellido;
+        TextView nombre;
         ImageView imagen;
         Button btnDetalle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre=itemView.findViewById(R.id.tvNomMascota);
-            apellido=itemView.findViewById(R.id.tvApellidoMascota);
             imagen=itemView.findViewById(R.id.ivMascota);
             btnDetalle=itemView.findViewById(R.id.btDetalleMascotaInicio);
 

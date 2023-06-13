@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.vettime2.login.LogInActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String accessToken = getIntent().getStringExtra(LogInActivity.EXTRA_ACCESS_TOKEN);
+        Log.d("salida", "onCreate: " + accessToken);
 
         navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
