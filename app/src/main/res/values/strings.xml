@@ -6,6 +6,8 @@
     <string name="web_client_id">264929445129-5nunbh64133mvh0r3d1ovilecp5fk0h6.apps.googleusercontent.com</string>
     <string name="web_client_id2">264929445129-4lrvssm6r5kq7rh14qdu3l3m3g3eruub.apps.googleusercontent.com</string>
     <string name="pr1">264929445129-qsf6727uiflq5p5pkbktrt5i1ja83k6u.apps.googleusercontent.com</string>
+    <string name="com_auth0_client_id">oVBuCk8HaJEp7afwViAW5GOZnn3YQ1MF</string>
+    <string name="com_auth0_domain">dev-imbas1v3lp0rrnnp.us.auth0.com</string>
    </resources>
 
 

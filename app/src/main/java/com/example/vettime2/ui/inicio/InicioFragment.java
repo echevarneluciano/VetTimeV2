@@ -34,7 +34,6 @@ public class InicioFragment extends Fragment {
         inicioViewModel.getMascotas().observe(getViewLifecycleOwner(), mascotas -> {
             AdapterMascotasInicio adapter = new AdapterMascotasInicio(getContext(), mascotas, getLayoutInflater());
             recyclerView.setAdapter(adapter);
-            Log.d("salida", mascotas.size() + " tamño");
         });
 
         inicioViewModel.setmMascotas();
