@@ -9,7 +9,7 @@ public class Mascota implements Serializable {
     private String nombre;
     private String apellido;
     private int activo;
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     private float peso;
     private String foto;
     private String datos_varios;
@@ -19,7 +19,7 @@ public class Mascota implements Serializable {
 
     }
 
-    public Mascota(int id, String nombre, String apellido, int activo, Date fechaNacimiento, float peso, String foto, String datos_varios, String uid) {
+    public Mascota(int id, String nombre, String apellido, int activo, String fechaNacimiento, float peso, String foto, String datos_varios, String uid) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -63,11 +63,11 @@ public class Mascota implements Serializable {
         this.activo = activo;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -105,7 +105,16 @@ public class Mascota implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + ' ' + apellido;
+        return "Mascota{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", activo=" + activo +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", peso=" + peso +
+                ", foto='" + foto + '\'' +
+                ", datos_varios='" + datos_varios + '\'' +
+                ", uid='" + uid + '\'' +
+                '}';
     }
-
 }

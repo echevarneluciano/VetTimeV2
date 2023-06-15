@@ -63,6 +63,9 @@ public class ApiClient {
         @POST("Consultas/{empleado}")
         Call<Consulta> nuevaConsultas(@Body Consulta consulta, @Path("empleado") String empleado);
 
+        @POST("Mascotas")
+        Call<Mascota> editaMascota(@Body Mascota mascota);
+
     }
 
 }

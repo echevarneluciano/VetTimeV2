@@ -74,7 +74,8 @@ public class AdapterMascotasInicio  extends RecyclerView.Adapter<AdapterMascotas
                 public void onClick(View v) {
 
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("mascota", mascotas.get(getAdapterPosition()));
+                    Mascota laMascota = mascotas.get(getAdapterPosition());
+                    bundle.putSerializable("mascota", laMascota);
 
                     Navigation.findNavController( (Activity)context,R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_dashboard_to_detalleMascotaFragment,bundle);
                 }
