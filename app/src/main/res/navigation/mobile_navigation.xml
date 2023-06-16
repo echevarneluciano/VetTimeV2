@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_detalleMascotaFragment"
             app:destination="@id/detalleMascotaFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_nuevaMascotaFragment"
+            app:destination="@id/nuevaMascotaFragment" />
     </fragment>
 
     <fragment
@@ -46,6 +49,33 @@
         tools:layout="@layout/fragment_detalle_mascota" >
         <action
             android:id="@+id/action_detalleMascotaFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+        <action
+            android:id="@+id/action_detalleMascotaFragment_to_mascotasFragment"
+            app:destination="@id/mascotasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mascotasFragment"
+        android:name="com.example.vettime2.ui.mascotas.MascotasFragment"
+        android:label="fragment_mascotas"
+        tools:layout="@layout/fragment_mascotas" >
+        <action
+            android:id="@+id/action_mascotasFragment_to_detalleMascotaFragment"
+            app:destination="@id/detalleMascotaFragment" />
+        <action
+            android:id="@+id/action_mascotasFragment_to_nuevaMascotaFragment"
+            app:destination="@id/nuevaMascotaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nuevaMascotaFragment"
+        android:name="com.example.vettime2.ui.mascotas.NuevaMascotaFragment"
+        android:label="fragment_nueva_mascota"
+        tools:layout="@layout/fragment_nueva_mascota" >
+        <action
+            android:id="@+id/action_nuevaMascotaFragment_to_mascotasFragment"
+            app:destination="@id/mascotasFragment" />
+        <action
+            android:id="@+id/action_nuevaMascotaFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
     </fragment>
 </navigation>

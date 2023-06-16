@@ -66,6 +66,9 @@ public class ApiClient {
         @POST("Mascotas")
         Call<Mascota> editaMascota(@Body Mascota mascota);
 
+        @POST("Mascotas/Nueva")
+        Call<Mascota> nuevaMascota(@Body Mascota mascota);
+
     }
 
 }

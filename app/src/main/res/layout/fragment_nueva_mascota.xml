@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mascotas.NuevaMascotaFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/etPesoMascotaN"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:text="peso"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etFechaMascotaN" />
+
+            <EditText
+                android:id="@+id/etFechaMascotaN"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:inputType="date"
+                android:text="dd-mm-aaaa"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etApellidoMascotaN" />
+
+            <EditText
+                android:id="@+id/etApellidoMascotaN"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="10dp"
+                android:text="apellido"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etNombreMascotaN" />
+
+            <TextView
+                android:id="@+id/etiFechaNacN"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Fecha de nacimiento:"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etiApellidoN" />
+
+            <TextView
+                android:id="@+id/etiPesoN"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Peso (Kl):"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etiFechaNacN" />
+
+            <TextView
+                android:id="@+id/etiApellidoN"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Apellido:"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etiNombreN" />
+
+            <ImageView
+                android:id="@+id/ivMascotaPerfilN"
+                android:layout_width="match_parent"
+                android:layout_height="289dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/etiNombreN"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:text="Nombre:"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivMascotaPerfilN" />
+
+            <EditText
+                android:id="@+id/etNombreMascotaN"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="10dp"
+                android:text="nombre"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivMascotaPerfilN" />
+
+            <Button
+                android:id="@+id/btEditarMN"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="Editar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btGuardarMN"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="Guardar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
