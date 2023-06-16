@@ -26,6 +26,12 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_nuevaMascotaFragment"
             app:destination="@id/nuevaMascotaFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_contactoFragment"
+            app:destination="@id/contactoFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_perfilFragment"
+            app:destination="@id/perfilFragment" />
     </fragment>
 
     <fragment
@@ -76,6 +82,24 @@
             app:destination="@id/mascotasFragment" />
         <action
             android:id="@+id/action_nuevaMascotaFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactoFragment"
+        android:name="com.example.vettime2.ui.inicio.ContactoFragment"
+        android:label="fragment_contacto"
+        tools:layout="@layout/fragment_contacto" >
+        <action
+            android:id="@+id/action_contactoFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.vettime2.ui.inicio.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" >
+        <action
+            android:id="@+id/action_perfilFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
     </fragment>
 </navigation>

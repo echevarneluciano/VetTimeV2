@@ -4,6 +4,7 @@ import com.example.vettime2.modelos.Cliente_mascota;
 import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Empleado_tarea;
 import com.example.vettime2.modelos.Mascota;
+import com.example.vettime2.modelos.Sucursal;
 import com.example.vettime2.modelos.Tarea;
 import com.example.vettime2.modelos.TurnosPorTarea;
 import com.google.gson.Gson;
@@ -68,6 +69,9 @@ public class ApiClient {
 
         @POST("Mascotas/Nueva")
         Call<Mascota> nuevaMascota(@Body Mascota mascota);
+
+        @GET("Sucursales")
+        Call<Sucursal> getSucursal();
 
     }
 

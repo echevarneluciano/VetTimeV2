@@ -49,6 +49,14 @@ public class InicioFragment extends Fragment {
             Navigation.findNavController(root).navigate(R.id.action_navigation_dashboard_to_nuevaMascotaFragment);
         });
 
+        binding.cvPerfil.setOnClickListener(v -> {
+            Navigation.findNavController(root).navigate(R.id.action_navigation_dashboard_to_perfilFragment);
+        });
+
+        binding.btContactoVete.setOnClickListener(v -> {
+            Navigation.findNavController(root).navigate(R.id.action_navigation_dashboard_to_contactoFragment);
+        });
+
         inicioViewModel.setmMascotas();
 
         return root;
