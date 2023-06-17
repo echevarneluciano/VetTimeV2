@@ -1,5 +1,6 @@
 package com.example.vettime2.request;
 
+import com.example.vettime2.modelos.Cliente;
 import com.example.vettime2.modelos.Cliente_mascota;
 import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Empleado_tarea;
@@ -72,6 +73,18 @@ public class ApiClient {
 
         @GET("Sucursales")
         Call<Sucursal> getSucursal();
+
+        @GET("Clientes")
+        Call<Cliente> getCliente();
+
+        @POST("Clientes")
+        Call<Cliente> editaCliente(@Body Cliente cliente);
+
+        @GET("Consultas/Pendientes")
+        Call<List<Consulta>> obtenerConsultasPendientes();
+
+        @GET("Consultas/Historial")
+        Call<List<Consulta>> obtenerConsultasHistorial();
 
     }
 

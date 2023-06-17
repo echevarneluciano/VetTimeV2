@@ -16,11 +16,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentPerfilBinding;
+import com.example.vettime2.modelos.Cliente;
 
 public class PerfilFragment extends Fragment {
 
     private PerfilViewModel mViewModel;
     private FragmentPerfilBinding binding;
+    private Cliente clienteMod;
 
     public static PerfilFragment newInstance() {
         return new PerfilFragment();
@@ -35,10 +37,25 @@ public class PerfilFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(PerfilViewModel.class);
 
-        Glide.with(this)
-                .load("https://http.cat/images/207.jpg")
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivPerfilU);
+        mViewModel.getCliente().observe(getViewLifecycleOwner(), cliente -> {
+            clienteMod = cliente;
+            cargarPerfil(cliente);
+        });
+
+        binding.btEditarU.setOnClickListener(v -> {
+           editable();
+        });
+
+        binding.btGuardarU.setOnClickListener(v -> {
+           clienteMod.setNombre(binding.etNomU.getText().toString());
+           clienteMod.setApellido(binding.etApeU.getText().toString());
+           clienteMod.setDireccion(binding.etDireU.getText().toString());
+           clienteMod.setMail(binding.etMailU.getText().toString());
+           clienteMod.setTelefono(binding.etTeleU.getText().toString());
+           mViewModel.modCliente(clienteMod);
+        });
+
+        mViewModel.setCliente();
 
         return root;
     }
@@ -48,6 +65,32 @@ public class PerfilFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(PerfilViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    public void cargarPerfil(Cliente cliente) {
+        Glide.with(this)
+                .load("https://http.cat/images/207.jpg")
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.ivPerfilU);
+        binding.etNomU.setText(cliente.getNombre());
+        binding.etNomU.setEnabled(false);
+        binding.etApeU.setText(cliente.getApellido());
+        binding.etApeU.setEnabled(false);
+        binding.etDireU.setText(cliente.getDireccion());
+        binding.etDireU.setEnabled(false);
+        binding.etMailU.setText(cliente.getMail());
+        binding.etMailU.setEnabled(false);
+        binding.etTeleU.setText(cliente.getTelefono());
+        binding.etTeleU.setEnabled(false);
+
+    }
+
+    public void editable(){
+        binding.etNomU.setEnabled(true);
+        binding.etApeU.setEnabled(true);
+        binding.etDireU.setEnabled(true);
+        binding.etMailU.setEnabled(true);
+        binding.etTeleU.setEnabled(true);
     }
 
 }

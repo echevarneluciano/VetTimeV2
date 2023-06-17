@@ -31,6 +31,11 @@ public class InicioFragment extends Fragment {
         binding = FragmentInicioBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        inicioViewModel.getCliente().observe(getViewLifecycleOwner(), cliente -> {
+            binding.tvNomUsuario.setText(cliente.getNombre()+" "+cliente.getApellido());
+            binding.tvMail.setText(cliente.getMail());
+        });
+
         Glide.with(this)
                 .load("https://http.cat/images/207.jpg")
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -57,6 +62,7 @@ public class InicioFragment extends Fragment {
             Navigation.findNavController(root).navigate(R.id.action_navigation_dashboard_to_contactoFragment);
         });
 
+        inicioViewModel.setCliente();
         inicioViewModel.setmMascotas();
 
         return root;

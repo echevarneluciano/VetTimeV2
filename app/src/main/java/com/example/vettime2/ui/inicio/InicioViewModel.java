@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.vettime2.modelos.Cliente;
 import com.example.vettime2.modelos.Cliente_mascota;
 import com.example.vettime2.modelos.Mascota;
 import com.example.vettime2.request.ApiClient;
@@ -25,6 +26,7 @@ import retrofit2.Response;
 public class InicioViewModel extends AndroidViewModel {
 
 private MutableLiveData<List<Mascota>> mMascotas;
+private MutableLiveData<Cliente> mCliente;
 private Context context;
 private ApiClient.EndPointVetTime end;
 
@@ -41,6 +43,13 @@ private ApiClient.EndPointVetTime end;
         return mMascotas;
     }
 
+    public LiveData<Cliente> getCliente() {
+        if (mCliente == null) {
+            mCliente = new MutableLiveData<>();
+        }
+        return mCliente;
+    }
+
     public void setmMascotas() {
         try {
             Call<List<Mascota>> call = end.obtenerMascotas();
@@ -53,6 +62,26 @@ private ApiClient.EndPointVetTime end;
                 }
                 @Override
                 public void onFailure(Call<List<Mascota>> call, Throwable t) {
+                    Log.d("salida 1", t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Log.d("salida 2", e.getMessage());
+        }
+    }
+
+    public void setCliente(){
+        try {
+            Call<Cliente> call = end.getCliente();
+            call.enqueue(new Callback<Cliente>() {
+                @Override
+                public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+                    if (response.body() != null) {
+                        mCliente.setValue(response.body());
+                    }
+                }
+                @Override
+                public void onFailure(Call<Cliente> call, Throwable t) {
                     Log.d("salida 1", t.getMessage());
                 }
             });

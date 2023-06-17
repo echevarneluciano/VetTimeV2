@@ -14,12 +14,13 @@ public class Consulta implements Serializable {
     private String detalle;
     private Empleado empleado;
     private Cliente cliente;
+    private Cliente_mascota cliente_mascota;
 
     public Consulta() {
 
     }
 
-    public Consulta(int id, int estado, String tiempoInicio, String tiempoFin, int cliente_mascotaId, int empleadoId, int activo, String detalle, Empleado empleado, Cliente cliente) {
+    public Consulta(int id, int estado, String tiempoInicio, String tiempoFin, int cliente_mascotaId, int empleadoId, int activo, String detalle, Empleado empleado, Cliente cliente, Cliente_mascota cliente_mascota) {
         this.id = id;
         this.estado = estado;
         this.tiempoInicio = tiempoInicio;
@@ -30,6 +31,7 @@ public class Consulta implements Serializable {
         this.detalle = detalle;
         this.empleado = empleado;
         this.cliente = cliente;
+        this.cliente_mascota = cliente_mascota;
     }
 
     public int getId() {
@@ -110,6 +112,14 @@ public class Consulta implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Cliente_mascota getCliente_mascota() {
+        return cliente_mascota;
+    }
+
+    public void setCliente_mascota(Cliente_mascota cliente_mascota) {
+        this.cliente_mascota = cliente_mascota;
     }
 
     @Override
