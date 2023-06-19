@@ -2,6 +2,7 @@ package com.example.vettime2.ui.inicio;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -29,11 +30,15 @@ private MutableLiveData<List<Mascota>> mMascotas;
 private MutableLiveData<Cliente> mCliente;
 private Context context;
 private ApiClient.EndPointVetTime end;
+    private SharedPreferences sp;
+    private String token;
 
     public InicioViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         end = ApiClient.getEndpointVetTime();
+        sp = context.getSharedPreferences("token.xml",0);
+        token = sp.getString("token","");
     }
 
     public LiveData<List<Mascota>> getMascotas() {
@@ -52,16 +57,20 @@ private ApiClient.EndPointVetTime end;
 
     public void setmMascotas() {
         try {
-            Call<List<Mascota>> call = end.obtenerMascotas();
-            call.enqueue(new Callback<List<Mascota>>() {
+            ArrayList<Mascota> mascotas = new ArrayList<>();
+            Call<List<Cliente_mascota>> call = end.obtenerMascotas(token);
+            call.enqueue(new Callback<List<Cliente_mascota>>() {
                 @Override
-                public void onResponse(Call<List<Mascota>> call, Response<List<Mascota>> response) {
+                public void onResponse(Call<List<Cliente_mascota>> call, Response<List<Cliente_mascota>> response) {
                     if (response.body() != null) {
-                        mMascotas.setValue(response.body());
+                       response.body().forEach(mascota -> {
+                           mascotas.add(mascota.getMascota());
+                       });
+                       mMascotas.setValue(mascotas);
                     }
                 }
                 @Override
-                public void onFailure(Call<List<Mascota>> call, Throwable t) {
+                public void onFailure(Call<List<Cliente_mascota>> call, Throwable t) {
                     Log.d("salida 1", t.getMessage());
                 }
             });
@@ -72,7 +81,7 @@ private ApiClient.EndPointVetTime end;
 
     public void setCliente(){
         try {
-            Call<Cliente> call = end.getCliente();
+            Call<Cliente> call = end.getCliente(token);
             call.enqueue(new Callback<Cliente>() {
                 @Override
                 public void onResponse(Call<Cliente> call, Response<Cliente> response) {

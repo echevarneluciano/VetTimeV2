@@ -2,6 +2,7 @@ package com.example.vettime2.ui.inicio;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,11 +27,15 @@ public class DetalleMascotaViewModel extends AndroidViewModel {
     private MutableLiveData<Mascota> mMascota;
     private Context context;
     private ApiClient.EndPointVetTime end;
+    private SharedPreferences sp;
+    private String token;
 
     public DetalleMascotaViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         end = ApiClient.getEndpointVetTime();
+        sp = context.getSharedPreferences("token.xml",0);
+        token = sp.getString("token","");
     }
 
     public LiveData<Mascota> getMascota(){
@@ -43,8 +48,7 @@ public class DetalleMascotaViewModel extends AndroidViewModel {
     public void setMascota(Mascota mascota){
 
         try {
-            Call<Mascota> call = end.editaMascota(mascota);
-            Log.d("salida", mascota.toString()+" "+call.request().toString());
+            Call<Mascota> call = end.editaMascota(token,mascota);
             call.enqueue(new Callback<Mascota>() {
                 @Override
                 public void onResponse(Call<Mascota> call, Response<Mascota> response) {

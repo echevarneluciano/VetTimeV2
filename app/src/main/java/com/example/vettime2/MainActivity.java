@@ -1,10 +1,12 @@
 package com.example.vettime2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.vettime2.login.LogInActivity;
+import com.example.vettime2.modelos.Cliente;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private BottomNavigationView navView;
+    public Cliente clienteLogeado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String accessToken = getIntent().getStringExtra(LogInActivity.EXTRA_ACCESS_TOKEN);
-        Log.d("salida", "onCreate: " + accessToken);
+        Intent intent = getIntent();
+        clienteLogeado = (Cliente) intent.getSerializableExtra("cliente");
+        Log.d("clienteLogeado", clienteLogeado.toString());
 
         navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

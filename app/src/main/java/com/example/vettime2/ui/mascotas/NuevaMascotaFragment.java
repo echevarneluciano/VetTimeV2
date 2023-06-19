@@ -59,6 +59,14 @@ public class NuevaMascotaFragment extends Fragment {
             mViewModel.setmMascota(mascota);
         });
 
+        mViewModel.getMascota().observe(getViewLifecycleOwner(), mascota -> {
+           binding.etNombreMascotaN.setEnabled(false);
+           binding.etApellidoMascotaN.setEnabled(false);
+           binding.etFechaMascotaN.setEnabled(false);
+           binding.btGuardarMN.setEnabled(false);
+           binding.etPesoMascotaN.setEnabled(false);
+        });
+
         Glide.with(this)
                 .load("https://http.cat/images/301.jpg")
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

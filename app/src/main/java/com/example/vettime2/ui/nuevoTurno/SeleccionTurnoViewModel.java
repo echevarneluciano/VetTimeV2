@@ -2,6 +2,7 @@ package com.example.vettime2.ui.nuevoTurno;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     private String tiempoTarea;
     private List<Cliente_mascota> clientes_mascotas;
     private ArrayList<String> horariosDisponibles;
+    private SharedPreferences sp;
+    private String token;
 
 
     public SeleccionTurnoViewModel(@NonNull Application application) {
@@ -43,6 +46,8 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
         context = application.getApplicationContext();
         utils = new Utils();
         end = ApiClient.getEndpointVetTime();
+        sp = context.getSharedPreferences("token.xml",0);
+        token = sp.getString("token","");
     }
 
     public LiveData<List<String>> getMascotas() {
@@ -64,7 +69,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
         fecha = utils.convertirFechaMysql(anio, mes, dia);
         ArrayList<String> horarios = new ArrayList<>();
         try {
-            Call<List<TurnosPorTarea>> call = end.obtenerTurnosPorFecha(tarea, fecha, empleado);
+            Call<List<TurnosPorTarea>> call = end.obtenerTurnosPorFecha(token,tarea, fecha, empleado);
             Log.d("salida", call.request().url().toString());
             call.enqueue(new Callback<List<TurnosPorTarea>>() {
                 @Override
@@ -93,7 +98,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     public void filtraTurnosOcupados(List<String> turnos,String empleado) {
         List<Consulta> consultas = new ArrayList<>();
         try {
-            Call<List<Consulta>> call = end.obtenerConsultasPorFecha(fecha, empleado);
+            Call<List<Consulta>> call = end.obtenerConsultasPorFecha(token,fecha, empleado);
             call.enqueue(new Callback<List<Consulta>>() {
                 @Override
                 public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
@@ -118,7 +123,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     public void setMascotas() {
         ArrayList<String> mascotas = new ArrayList<>();
         try {
-            Call<List<Cliente_mascota>> call = end.obtenerClientesMascotas();
+            Call<List<Cliente_mascota>> call = end.obtenerClientesMascotas(token);
             call.enqueue(new Callback<List<Cliente_mascota>>() {
                 @Override
                 public void onResponse(Call<List<Cliente_mascota>> call, Response<List<Cliente_mascota>> response) {
@@ -141,6 +146,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
     }
 
     public void crearConsulta(String empleado, String hora, String mascota) {
+
             String tiempoFin = utils.sumaHoraAFechaFin(hora, tiempoTarea, fecha);
             String tiempoInicio = utils.sumaHoraAFecha(hora, fecha);
             int mascotaid = clientes_mascotas.stream().filter(c -> c.getMascota().getNombre().equals(mascota)).findFirst().get().getId();
@@ -150,13 +156,11 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
             consulta.setTiempoFin(tiempoFin);
             Log.d("salida", consulta.toString());
 
-            List<String> lapsoTarea = new ArrayList<>();
-            lapsoTarea = utils.lapsoTarea(hora, tiempoTarea);
-            if (!horariosDisponibles.containsAll(lapsoTarea)) {
-                Toast.makeText(context, "La tarea podria demorar tiempo de turnos ocupados. Seleccione otro horario.", Toast.LENGTH_LONG).show();;
+            if (compruebaLapso(hora)) {
+
             }else {
             try {
-                Call<Consulta> call = end.nuevaConsultas(consulta, empleado);
+                Call<Consulta> call = end.nuevaConsultas(token,consulta, empleado);
                 Log.d("salida", call.request().url().toString());
                 call.enqueue(new Callback<Consulta>() {
                     @Override
@@ -174,5 +178,20 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
                 Log.d("salida 2", e.getMessage());
             }
 }}
+
+    public boolean compruebaLapso(String hora) {
+
+        List<String> lapsoTarea = new ArrayList<>();
+        lapsoTarea = utils.lapsoTarea(hora, tiempoTarea);
+
+        if (horariosDisponibles.containsAll(lapsoTarea)) {
+            return false;
+        }else {
+            Toast.makeText(context, "Turnos solapados seleccione otro horario. Tiempo necesario: "+tiempoTarea+".", Toast.LENGTH_LONG).show();
+            Log.d("salida", tiempoTarea);
+            return true;
+        }
+
+    }
 
 }

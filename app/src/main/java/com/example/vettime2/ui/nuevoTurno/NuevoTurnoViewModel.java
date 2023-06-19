@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,18 +42,19 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
     private  MutableLiveData<List<String>> mTareas;
     private MutableLiveData<List<String>> mEmpleados;
     private Context context;
-    private List<Cliente_mascota> clientes_mascotas;
     private ArrayList<String> tareas = new ArrayList<>();
     private ArrayList<String> empleados = new ArrayList<>();
     private ArrayList<Empleado_tarea> empleados_tareas = new ArrayList<>();
     private ApiClient.EndPointVetTime end;
-    private Utils utils;
+    private SharedPreferences sp;
+    private String token;
 
     public NuevoTurnoViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
-        utils = new Utils();
         end = ApiClient.getEndpointVetTime();
+        sp = context.getSharedPreferences("token.xml",0);
+        token = sp.getString("token","");
     }
 
     public LiveData<List<String>> getTareas() {
@@ -71,7 +73,7 @@ public class NuevoTurnoViewModel extends AndroidViewModel {
 
     public void setmTareas() {
         try {
-            Call<List<Empleado_tarea>> call = end.obtenerEmpleadosTareas();
+            Call<List<Empleado_tarea>> call = end.obtenerEmpleadosTareas(token);
             call.enqueue(new Callback<List<Empleado_tarea>>() {
                 @Override
                 public void onResponse(Call<List<Empleado_tarea>> call, Response<List<Empleado_tarea>> response) {

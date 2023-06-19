@@ -24,7 +24,6 @@
             android:id="@+id/rvHistorialT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#3F51B5"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true" />
     </androidx.cardview.widget.CardView>
@@ -47,7 +46,6 @@
             android:id="@+id/recyclerViewT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#3F51B5"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true" />
     </androidx.cardview.widget.CardView>

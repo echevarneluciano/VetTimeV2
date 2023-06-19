@@ -30,6 +30,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
                 android:text="peso"
+                android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFechaMascotaN" />
 
@@ -116,16 +117,6 @@
                 android:text="nombre"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivMascotaPerfilN" />
-
-            <Button
-                android:id="@+id/btEditarMN"
-                android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
-                android:text="Editar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/btGuardarMN"

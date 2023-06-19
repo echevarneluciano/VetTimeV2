@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.vettime2.R;
@@ -54,6 +56,18 @@ public class SeleccionTurnoFragment extends Fragment {
         binding.btConfirmaConsulta.setOnClickListener(v -> {
            mViewModel.crearConsulta(empleado,binding.spHorario.getSelectedItem().toString(),binding.spMascota.getSelectedItem().toString());
         });
+
+        binding.spHorario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String selectedItem = parent.getItemAtPosition(position).toString();
+                        mViewModel.compruebaLapso(selectedItem);
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                }
+        );
 
         mViewModel.setMascotas();
 

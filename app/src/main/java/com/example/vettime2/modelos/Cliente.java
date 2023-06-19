@@ -8,7 +8,7 @@ public class Cliente implements Serializable {
     private String nombre;
     private String apellido;
     private String mail;
-    private String pass;
+    private String authId;
     private int activo;
     private String telefono;
     private String direccion;
@@ -17,12 +17,12 @@ public class Cliente implements Serializable {
 
     }
 
-    public Cliente(int id, String nombre, String apellido, String mail, String pass, int activo, String telefono, String direccion) {
+    public Cliente(int id, String nombre, String apellido, String mail, String authId, int activo, String telefono, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
-        this.pass = pass;
+        this.authId = authId;
         this.activo = activo;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -60,12 +60,12 @@ public class Cliente implements Serializable {
         this.mail = mail;
     }
 
-    public String getPass() {
-        return pass;
+    public String getAuthId() {
+        return authId;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setAuthId(String authId) {
+        this.authId = authId;
     }
 
     public int getActivo() {
@@ -102,6 +102,7 @@ public class Cliente implements Serializable {
                 ", activo=" + activo +
                 ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
+                ", authId='" + authId + '\'' +
                 '}';
     }
 
