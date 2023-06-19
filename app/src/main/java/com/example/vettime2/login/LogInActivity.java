@@ -33,7 +33,8 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         signInButton = findViewById(R.id.login_button);
-        auth0 = new Auth0(this);
+        auth0 = new Auth0("nfSz9pe3wm7k28X4oTEIxWWwU61G4kCQ",
+                "dev-imbas1v3lp0rrnnp.us.auth0.com");
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +47,8 @@ public class LogInActivity extends AppCompatActivity {
     private void login() {
         WebAuthProvider.login(auth0)
                 .withScheme("demo")
-                .withAudience(String.format("https://%s/userinfo", getString(R.string.com_auth0_domain)))
+                .withScope("openid profile offline_access")
+                .withAudience(getString(R.string.audit))
                 .start(this, new Callback<Credentials, AuthenticationException>() {
 
                     @Override
