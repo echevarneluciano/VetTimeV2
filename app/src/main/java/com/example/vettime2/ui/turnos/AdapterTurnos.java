@@ -76,11 +76,11 @@ public class AdapterTurnos extends RecyclerView.Adapter<AdapterTurnos.ViewHolder
                 @Override
                 public void onClick(View v) {
 
-                    Bundle bundle = new Bundle();
+                    Bundle bundleConsulta = new Bundle();
                     Consulta consulta = consultas.get(getAdapterPosition());
-                    bundle.putSerializable("consulta", consulta);
+                    bundleConsulta.putSerializable("consulta", consulta);
 
-                   // Navigation.findNavController( (Activity)context,R.id.nav_host_fragment_activity_main).navigate(R.id.action_mascotasFragment_to_detalleMascotaFragment,bundle);
+                    Navigation.findNavController( (Activity)context,R.id.nav_host_fragment_activity_main).navigate(R.id.action_navigation_turnos_to_detalleTurnoFragment,bundleConsulta);
                 }
             });
         }

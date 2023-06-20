@@ -45,6 +45,8 @@ public class LogInViewModel extends AndroidViewModel {
         cliente.setNombre(userProfile.getNickname());
         cliente.setMail(userProfile.getName());
         cliente.setAuthId(userProfile.getId());
+        Log.d("token",sp.getString("token",""));
+        Log.d("cliente",cliente.toString()+" "+userProfile.getId());
 
         try {
             Call<Cliente> call= end.loginCliente(sp.getString("token",""),cliente);

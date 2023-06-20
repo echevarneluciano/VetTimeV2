@@ -67,6 +67,7 @@ public class LogInActivity extends AppCompatActivity {
                         EXTRA_ACCESS_TOKEN = credentials.getAccessToken();
                         user = credentials.getUser();
                         logInViewModel.login(EXTRA_ACCESS_TOKEN, user);
+                        Log.d("TAG", "onSuccess: " + user);
                     }
                 });
     }

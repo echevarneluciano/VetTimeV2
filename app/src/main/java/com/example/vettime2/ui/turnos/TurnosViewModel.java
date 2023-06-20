@@ -2,6 +2,7 @@ package com.example.vettime2.ui.turnos;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,11 +28,15 @@ public class TurnosViewModel extends AndroidViewModel {
     private MutableLiveData<List<Consulta>> mConsultasHistorial;
     private Context context;
     private ApiClient.EndPointVetTime end;
+    private SharedPreferences sp;
+    private String token;
 
     public TurnosViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         end = ApiClient.getEndpointVetTime();
+        sp = context.getSharedPreferences("token.xml",0);
+        token = sp.getString("token","");
     }
 
     public LiveData<List<Consulta>> getConsultasPendientes() {
@@ -50,7 +55,7 @@ public class TurnosViewModel extends AndroidViewModel {
 
     public void setmConsultasPendientes() {
         try {
-            Call<List<Consulta>> call = end.obtenerConsultasPendientes();
+            Call<List<Consulta>> call = end.obtenerConsultasPendientes(token);
             call.enqueue(new Callback<List<Consulta>>() {
                 @Override
                 public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
@@ -70,7 +75,7 @@ public class TurnosViewModel extends AndroidViewModel {
 
     public void setmConsultasHistorial() {
         try {
-            Call<List<Consulta>> call = end.obtenerConsultasHistorial();
+            Call<List<Consulta>> call = end.obtenerConsultasHistorial(token);
             call.enqueue(new Callback<List<Consulta>>() {
                 @Override
                 public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {

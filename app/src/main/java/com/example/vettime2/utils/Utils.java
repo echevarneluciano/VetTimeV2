@@ -22,8 +22,9 @@ public class Utils {
 
     public String getDate(int anio, int mes, int dia) {
         LocalDate date = LocalDate.of(anio, mes, dia);
+        Locale locale = Locale.ENGLISH;
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+        return dayOfWeek.getDisplayName(TextStyle.FULL, locale);
     }
 
     public String convertirFechaMysql(int anio, int mes, int dia) {

@@ -76,10 +76,10 @@ public class ApiClient {
         Call<Cliente> editaCliente(@Header("Authorization")String token,@Body Cliente cliente);
 
         @GET("Consultas/Pendientes")
-        Call<List<Consulta>> obtenerConsultasPendientes();
+        Call<List<Consulta>> obtenerConsultasPendientes(@Header("Authorization")String token);
 
         @GET("Consultas/Historial")
-        Call<List<Consulta>> obtenerConsultasHistorial();
+        Call<List<Consulta>> obtenerConsultasHistorial(@Header("Authorization")String token);
 
         @POST("Clientes/login")
         Call<Cliente> loginCliente(@Header("Authorization")String token, @Body Cliente cliente);

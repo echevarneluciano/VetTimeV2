@@ -45,11 +45,14 @@
         <action
             android:id="@+id/action_navigation_turnos_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_turnos_to_detalleTurnoFragment"
+            app:destination="@id/detalleTurnoFragment" />
     </fragment>
     <fragment
         android:id="@+id/seleccionTurnoFragment"
         android:name="com.example.vettime2.ui.nuevoTurno.SeleccionTurnoFragment"
-        android:label="fragment_seleccion_turno"
+        android:label="Seleccion turno"
         tools:layout="@layout/fragment_seleccion_turno" >
         <action
             android:id="@+id/action_seleccionTurnoFragment_to_navigation_home"
@@ -58,7 +61,7 @@
     <fragment
         android:id="@+id/detalleMascotaFragment"
         android:name="com.example.vettime2.ui.inicio.DetalleMascotaFragment"
-        android:label="fragment_detalle_mascota"
+        android:label="Detalle mascota"
         tools:layout="@layout/fragment_detalle_mascota" >
         <action
             android:id="@+id/action_detalleMascotaFragment_to_navigation_dashboard"
@@ -70,7 +73,7 @@
     <fragment
         android:id="@+id/mascotasFragment"
         android:name="com.example.vettime2.ui.mascotas.MascotasFragment"
-        android:label="fragment_mascotas"
+        android:label="Mis mascotas"
         tools:layout="@layout/fragment_mascotas" >
         <action
             android:id="@+id/action_mascotasFragment_to_detalleMascotaFragment"
@@ -82,7 +85,7 @@
     <fragment
         android:id="@+id/nuevaMascotaFragment"
         android:name="com.example.vettime2.ui.mascotas.NuevaMascotaFragment"
-        android:label="fragment_nueva_mascota"
+        android:label="Nueva mascota"
         tools:layout="@layout/fragment_nueva_mascota" >
         <action
             android:id="@+id/action_nuevaMascotaFragment_to_mascotasFragment"
@@ -94,7 +97,7 @@
     <fragment
         android:id="@+id/contactoFragment"
         android:name="com.example.vettime2.ui.inicio.ContactoFragment"
-        android:label="fragment_contacto"
+        android:label="Contacto"
         tools:layout="@layout/fragment_contacto" >
         <action
             android:id="@+id/action_contactoFragment_to_navigation_dashboard"
@@ -103,10 +106,19 @@
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.example.vettime2.ui.inicio.PerfilFragment"
-        android:label="fragment_perfil"
+        android:label="Mi perfil"
         tools:layout="@layout/fragment_perfil" >
         <action
             android:id="@+id/action_perfilFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleTurnoFragment"
+        android:name="com.example.vettime2.ui.turnos.DetalleTurnoFragment"
+        android:label="Detalle turno"
+        tools:layout="@layout/fragment_detalle_turno" >
+        <action
+            android:id="@+id/action_detalleTurnoFragment_to_navigation_turnos"
+            app:destination="@id/navigation_turnos" />
     </fragment>
 </navigation>
