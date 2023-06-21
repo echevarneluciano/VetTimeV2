@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,12 @@ public class PerfilFragment extends Fragment {
            mViewModel.modCliente(clienteMod);
         });
 
+        binding.ivPerfilU.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_perfilFragment_to_archivosFragment);
+        });
+
+
+
         mViewModel.setCliente();
 
         return root;
@@ -69,7 +76,7 @@ public class PerfilFragment extends Fragment {
 
     public void cargarPerfil(Cliente cliente) {
         Glide.with(this)
-                .load("https://http.cat/images/207.jpg")
+                .load("http://192.168.15.7:5111"+cliente.getFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivPerfilU);
         binding.etNomU.setText(cliente.getNombre());

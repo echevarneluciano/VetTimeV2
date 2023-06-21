@@ -111,6 +111,9 @@
         <action
             android:id="@+id/action_perfilFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
+        <action
+            android:id="@+id/action_perfilFragment_to_archivosFragment"
+            app:destination="@id/archivosFragment" />
     </fragment>
     <fragment
         android:id="@+id/detalleTurnoFragment"
@@ -120,5 +123,14 @@
         <action
             android:id="@+id/action_detalleTurnoFragment_to_navigation_turnos"
             app:destination="@id/navigation_turnos" />
+    </fragment>
+    <fragment
+        android:id="@+id/archivosFragment"
+        android:name="com.example.vettime2.ui.archivos.ArchivosFragment"
+        android:label="fragment_archivos"
+        tools:layout="@layout/fragment_archivos" >
+        <action
+            android:id="@+id/action_archivosFragment_to_perfilFragment"
+            app:destination="@id/perfilFragment" />
     </fragment>
 </navigation>

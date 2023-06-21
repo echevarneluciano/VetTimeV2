@@ -17,6 +17,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -83,6 +85,10 @@ public class ApiClient {
 
         @POST("Clientes/login")
         Call<Cliente> loginCliente(@Header("Authorization")String token, @Body Cliente cliente);
+
+        @POST("Clientes/imgupload")
+        @FormUrlEncoded
+        Call<Cliente> UploadImage(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image);
 
     }
 

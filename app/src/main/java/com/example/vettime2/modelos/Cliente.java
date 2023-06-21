@@ -12,12 +12,13 @@ public class Cliente implements Serializable {
     private int activo;
     private String telefono;
     private String direccion;
+    private String foto;
 
     public Cliente(){
 
     }
 
-    public Cliente(int id, String nombre, String apellido, String mail, String authId, int activo, String telefono, String direccion) {
+    public Cliente(int id, String nombre, String apellido, String mail, String authId, int activo, String telefono, String direccion, String foto) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -26,6 +27,15 @@ public class Cliente implements Serializable {
         this.activo = activo;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.foto = foto;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public int getId() {
@@ -103,6 +113,7 @@ public class Cliente implements Serializable {
                 ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
                 ", authId='" + authId + '\'' +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 
