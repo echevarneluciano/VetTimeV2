@@ -34,12 +34,11 @@ public class InicioFragment extends Fragment {
         inicioViewModel.getCliente().observe(getViewLifecycleOwner(), cliente -> {
             binding.tvNomUsuario.setText(cliente.getNombre()+" "+cliente.getApellido());
             binding.tvMail.setText(cliente.getMail());
+            Glide.with(this)
+                    .load("http://192.168.15.7:5111"+cliente.getFoto())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.ivUsuario);
         });
-
-        Glide.with(this)
-                .load("https://http.cat/images/207.jpg")
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivUsuario);
 
         RecyclerView recyclerView = binding.rvMascotasInicio;
         GridLayoutManager grilla = new GridLayoutManager(getActivity(),1,GridLayoutManager.VERTICAL,false);

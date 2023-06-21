@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.vettime2.modelos.Cliente;
+import com.example.vettime2.modelos.Mascota;
 import com.example.vettime2.request.ApiClient;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +33,7 @@ public class ArchivosViewModel extends AndroidViewModel {
     private SharedPreferences sp;
     private String token;
     private MutableLiveData<String> mImagenCliente;
+    private MutableLiveData<Mascota> mMascota;
 
     public ArchivosViewModel(@NonNull Application application) {
         super(application);
@@ -48,12 +50,21 @@ public class ArchivosViewModel extends AndroidViewModel {
         return mImagenCliente;
     }
 
-    public void imageUpload(Bitmap bitmap){
+    public LiveData<Mascota> getmMascota(){
+        if (mMascota == null){
+            mMascota = new MutableLiveData<>();
+        }
+        return mMascota;
+    }
+
+    public void imageUpload(Bitmap bitmap,Mascota mascota){
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         String image = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-        String name = String.valueOf(Calendar.getInstance().getTimeInMillis());
+
+        if(mascota.getId() == 0){
+        String name = "user_"+String.valueOf(Calendar.getInstance().getTimeInMillis());
         try {
         Call<Cliente> call = end.UploadImage(token,name,image);
         call.enqueue(new Callback<Cliente>() {
@@ -62,7 +73,6 @@ public class ArchivosViewModel extends AndroidViewModel {
                 if (response != null && response.body() != null) {
                  mImagenCliente.setValue(response.body().getFoto());
                 }
-
             }
 
             @Override
@@ -73,6 +83,26 @@ public class ArchivosViewModel extends AndroidViewModel {
         } catch (Exception e) {
             Log.d("salida 2", e.getMessage());
         }
+    }else{
+        String name = "mascota_"+String.valueOf(Calendar.getInstance().getTimeInMillis());
+            try {
+                Call<Mascota> call = end.UploadImageMascota(token,name,image,mascota.getId());
+                call.enqueue(new Callback<Mascota>() {
+                    @Override
+                    public void onResponse(@Nullable Call<Mascota> call, @Nullable Response<Mascota> response) {
+                        if (response != null && response.body() != null) {
+                            mMascota.setValue(response.body());
+                        }
+                    }
+                    @Override
+                    public void onFailure(@Nullable Call<Mascota> call, @Nullable Throwable t) {
+                        Log.d("salida 1", t.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("salida 2", e.getMessage());
+            }
+    }
     }
 
 }

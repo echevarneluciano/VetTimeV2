@@ -18,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentPerfilBinding;
 import com.example.vettime2.modelos.Cliente;
+import com.example.vettime2.modelos.Mascota;
 
 public class PerfilFragment extends Fragment {
 
@@ -57,10 +58,11 @@ public class PerfilFragment extends Fragment {
         });
 
         binding.ivPerfilU.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_perfilFragment_to_archivosFragment);
+            Bundle bundle = new Bundle();
+            Mascota mascota = new Mascota();
+            bundle.putSerializable("mascota", mascota);
+            Navigation.findNavController(v).navigate(R.id.action_perfilFragment_to_archivosFragment, bundle);
         });
-
-
 
         mViewModel.setCliente();
 

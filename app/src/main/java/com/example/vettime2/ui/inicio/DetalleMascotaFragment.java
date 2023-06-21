@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.InputType;
@@ -76,6 +77,11 @@ public class DetalleMascotaFragment extends Fragment {
             mViewModel.setMascota(mascotaEditada);
         });
 
+        binding.ivMascotaPerfil.setOnClickListener(v -> {
+            bundle.putSerializable("mascota", mascota);
+            Navigation.findNavController(v).navigate(R.id.action_detalleMascotaFragment_to_archivosFragment,bundle);
+        });
+
         cargaPerfil(mascota);
 
         return root;
@@ -90,7 +96,7 @@ public class DetalleMascotaFragment extends Fragment {
 
     public void cargaPerfil(Mascota mascota){
         Glide.with(this)
-                .load("https://http.cat/images/301.jpg")
+                .load("http://192.168.15.7:5111"+mascota.getFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.ivMascotaPerfil);
 

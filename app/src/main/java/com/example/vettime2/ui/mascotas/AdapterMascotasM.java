@@ -49,7 +49,7 @@ public class AdapterMascotasM extends RecyclerView.Adapter<AdapterMascotasM.View
         holder.nombre.setText(mascotas.get(position).getNombre()+" "+mascotas.get(position).getApellido());
 
         Glide.with(context)
-                .load("https://http.cat/images/102.jpg")
+                .load("http://192.168.15.7:5111"+ mascotas.get(position).getFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imagen);
     }

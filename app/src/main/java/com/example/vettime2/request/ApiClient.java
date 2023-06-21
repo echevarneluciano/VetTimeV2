@@ -90,6 +90,10 @@ public class ApiClient {
         @FormUrlEncoded
         Call<Cliente> UploadImage(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image);
 
+        @POST("Mascotas/imgupload")
+        @FormUrlEncoded
+        Call<Mascota> UploadImageMascota(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image, @Field("id") Integer id);
+
     }
 
 }

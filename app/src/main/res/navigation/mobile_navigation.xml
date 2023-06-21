@@ -69,6 +69,9 @@
         <action
             android:id="@+id/action_detalleMascotaFragment_to_mascotasFragment"
             app:destination="@id/mascotasFragment" />
+        <action
+            android:id="@+id/action_detalleMascotaFragment_to_archivosFragment"
+            app:destination="@id/archivosFragment" />
     </fragment>
     <fragment
         android:id="@+id/mascotasFragment"
@@ -132,5 +135,8 @@
         <action
             android:id="@+id/action_archivosFragment_to_perfilFragment"
             app:destination="@id/perfilFragment" />
+        <action
+            android:id="@+id/action_archivosFragment_to_detalleMascotaFragment"
+            app:destination="@id/detalleMascotaFragment" />
     </fragment>
 </navigation>

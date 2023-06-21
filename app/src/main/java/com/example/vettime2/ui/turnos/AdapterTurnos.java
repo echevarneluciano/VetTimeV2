@@ -50,7 +50,7 @@ public class AdapterTurnos extends RecyclerView.Adapter<AdapterTurnos.ViewHolder
         holder.fecha.setText(consultas.get(position).getTiempoInicio());
 
         Glide.with(context)
-                .load("https://http.cat/images/102.jpg")
+                .load("http://192.168.15.7:5111"+consultas.get(position).getCliente_mascota().getMascota().getFoto())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imagen);
     }
