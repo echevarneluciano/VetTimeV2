@@ -30,6 +30,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<String>> mMascotas;
     private MutableLiveData<List<String>> mHorarios;
+    private MutableLiveData<Consulta> mConsulta;
     private Context context;
     private String fecha;
     private Utils utils;
@@ -62,6 +63,13 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
             mHorarios = new MutableLiveData<>();
         }
         return mHorarios;
+    }
+
+    public LiveData<Consulta> getConsulta() {
+        if (mConsulta == null) {
+            mConsulta = new MutableLiveData<>();
+        }
+        return mConsulta;
     }
 
     public void setHorarios(int dia, int mes, int anio,String tarea, String empleado) {
@@ -166,6 +174,7 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
                     @Override
                     public void onResponse(Call<Consulta> call, Response<Consulta> response) {
                         if (response.body() != null) {
+                            mConsulta.setValue(response.body());
                             Toast.makeText(context, "Consulta agendada, fecha: "+response.body().getTiempoInicio(), Toast.LENGTH_SHORT).show();
                         }
                     }

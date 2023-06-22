@@ -55,12 +55,12 @@ public class PerfilFragment extends Fragment {
            clienteMod.setMail(binding.etMailU.getText().toString());
            clienteMod.setTelefono(binding.etTeleU.getText().toString());
            mViewModel.modCliente(clienteMod);
+           Navigation.findNavController(root).navigate(R.id.action_perfilFragment_to_navigation_dashboard);
         });
 
         binding.ivPerfilU.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            Mascota mascota = new Mascota();
-            bundle.putSerializable("mascota", mascota);
+            bundle.putString("origen", "perfil");
             Navigation.findNavController(v).navigate(R.id.action_perfilFragment_to_archivosFragment, bundle);
         });
 

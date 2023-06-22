@@ -12,6 +12,7 @@ public class Consulta implements Serializable {
     private int empleadoId;
     private int activo;
     private String detalle;
+    private String foto;
     private Empleado empleado;
     private Cliente cliente;
     private Cliente_mascota cliente_mascota;
@@ -20,7 +21,7 @@ public class Consulta implements Serializable {
 
     }
 
-    public Consulta(int id, int estado, String tiempoInicio, String tiempoFin, int cliente_mascotaId, int empleadoId, int activo, String detalle, Empleado empleado, Cliente cliente, Cliente_mascota cliente_mascota) {
+    public Consulta(int id, int estado, String tiempoInicio, String tiempoFin, int cliente_mascotaId, int empleadoId, int activo, String detalle, Empleado empleado, Cliente cliente, Cliente_mascota cliente_mascota, String foto) {
         this.id = id;
         this.estado = estado;
         this.tiempoInicio = tiempoInicio;
@@ -31,7 +32,16 @@ public class Consulta implements Serializable {
         this.detalle = detalle;
         this.empleado = empleado;
         this.cliente = cliente;
+        this.foto = foto;
         this.cliente_mascota = cliente_mascota;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public int getId() {
@@ -133,6 +143,7 @@ public class Consulta implements Serializable {
                 ", empleadoId=" + empleadoId +
                 ", activo=" + activo +
                 ", detalle='" + detalle + '\'' +
+                ", foto='" + foto + '\'' +
                 ", empleado=" + empleado +
                 ", cliente=" + cliente +
                 '}';

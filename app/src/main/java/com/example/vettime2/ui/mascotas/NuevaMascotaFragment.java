@@ -2,15 +2,18 @@ package com.example.vettime2.ui.mascotas;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +45,36 @@ public class NuevaMascotaFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(NuevaMascotaViewModel.class);
 
+        binding.etFechaMascotaN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePicker = new DatePickerDialog(requireContext());
+                datePicker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        binding.etFechaMascotaN.setText((dayOfMonth)+"-"+(month+1)+"-"+year);
+                    }
+                });
+                datePicker.show();
+            }
+        });
+
+        binding.etFechaMascotaN.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    DatePickerDialog datePicker = new DatePickerDialog(requireContext());
+                    datePicker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            binding.etFechaMascotaN.setText((dayOfMonth)+"-"+(month+1)+"-"+year);
+                        }
+                    });
+                    datePicker.show();
+                }
+            }
+        });
+
         binding.btGuardarMN.setOnClickListener(v -> {
             Mascota mascota = new Mascota();
             mascota.setNombre(binding.etNombreMascotaN.getText().toString());
@@ -60,11 +93,7 @@ public class NuevaMascotaFragment extends Fragment {
         });
 
         mViewModel.getMascota().observe(getViewLifecycleOwner(), mascota -> {
-           binding.etNombreMascotaN.setEnabled(false);
-           binding.etApellidoMascotaN.setEnabled(false);
-           binding.etFechaMascotaN.setEnabled(false);
-           binding.btGuardarMN.setEnabled(false);
-           binding.etPesoMascotaN.setEnabled(false);
+            Navigation.findNavController(root).navigate(R.id.action_nuevaMascotaFragment_to_mascotasFragment);
         });
 
         Glide.with(this)

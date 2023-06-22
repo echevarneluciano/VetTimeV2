@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentArchivosBinding;
 import com.example.vettime2.login.LogInActivity;
+import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Mascota;
 
 import java.io.FileNotFoundException;
@@ -36,6 +37,7 @@ public class ArchivosFragment extends Fragment {
     private static final int SELECT_REQUEST_CODE = 1;
     private static final int CAPTURE_REQUEST_CODE = 0;
     private Mascota mascota = new Mascota();
+    private Consulta consulta = new Consulta();
     private Bundle bundle = new Bundle();
 
     public static ArchivosFragment newInstance() {
@@ -51,7 +53,26 @@ public class ArchivosFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ArchivosViewModel.class);
 
-        mascota = (Mascota) getArguments().getSerializable("mascota");
+        String origen = getArguments().getString("origen");
+        switch (origen) {
+            case "comprobante":
+                try {
+                    consulta = (Consulta) getArguments().getSerializable("consulta");
+                }catch (NullPointerException e){
+                    Log.e("ERROR", "Error en ArchivosFragment: " + e.getMessage());
+                }
+                break;
+            case "perfil":
+
+                break;
+            case "mascota":
+                try {
+                    mascota = (Mascota) getArguments().getSerializable("mascota");
+                }catch (NullPointerException e){
+                    Log.e("ERROR", "Error en ArchivosFragment: " + e.getMessage());
+                }
+                break;
+        }
 
         mViewModel.getImagen().observe(getViewLifecycleOwner(), imagenCliente -> {
            bundle.putString("imagenCliente", imagenCliente);
@@ -77,6 +98,10 @@ public class ArchivosFragment extends Fragment {
             }
         });
 
+       mViewModel.getConsulta().observe(getViewLifecycleOwner(), consulta -> {
+           Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment_activity_main).navigate(R.id.action_archivosFragment_to_navigation_dashboard);
+       });
+
         return root;
     }
 
@@ -100,7 +125,7 @@ public class ArchivosFragment extends Fragment {
                     if (data != null) {
                         bitmap = (Bitmap) data.getExtras().get("data");
                        binding.ImageView.setImageBitmap(bitmap);
-                        mViewModel.imageUpload(bitmap,mascota);
+                        mViewModel.imageUpload(bitmap,mascota,consulta);
                     }
 
                 }
@@ -118,7 +143,7 @@ public class ArchivosFragment extends Fragment {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), ImageUri);
                            binding.ImageView.setImageBitmap(bitmap);
                             //progressDialog.show();
-                            mViewModel.imageUpload(bitmap,mascota);
+                            mViewModel.imageUpload(bitmap,mascota,consulta);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

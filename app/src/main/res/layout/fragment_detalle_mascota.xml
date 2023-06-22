@@ -27,10 +27,10 @@
                 android:id="@+id/etPesoMascota"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="peso"
                 android:inputType="numberDecimal"
+                android:text="peso"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFechaMascota" />
 
@@ -38,7 +38,7 @@
                 android:id="@+id/etFechaMascota"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:inputType="date"
                 android:text="fecha"
@@ -49,7 +49,7 @@
                 android:id="@+id/etApellidoMascota"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:text="apellido"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Fecha de nacimiento:"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Peso (Kl):"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Apellido:"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Nombre:"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
                 android:id="@+id/etNombreMascota"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="nombre"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -121,22 +121,33 @@
             <Button
                 android:id="@+id/btEditarM"
                 android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
                 android:text="Editar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPesoMascota" />
 
             <Button
                 android:id="@+id/btGuardarM"
                 android:layout_width="160dp"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
                 android:text="Guardar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btEditarM" />
+
+            <Button
+                android:id="@+id/butEliminarM"
+                android:layout_width="160dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="42dp"
+                android:backgroundTint="#D50000"
+                android:text="Eliminar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etHora" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

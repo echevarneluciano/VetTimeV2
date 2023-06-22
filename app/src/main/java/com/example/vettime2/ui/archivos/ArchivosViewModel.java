@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.vettime2.modelos.Cliente;
+import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Mascota;
 import com.example.vettime2.request.ApiClient;
 
@@ -34,6 +35,7 @@ public class ArchivosViewModel extends AndroidViewModel {
     private String token;
     private MutableLiveData<String> mImagenCliente;
     private MutableLiveData<Mascota> mMascota;
+    private MutableLiveData<Consulta> mConsulta;
 
     public ArchivosViewModel(@NonNull Application application) {
         super(application);
@@ -57,21 +59,50 @@ public class ArchivosViewModel extends AndroidViewModel {
         return mMascota;
     }
 
-    public void imageUpload(Bitmap bitmap,Mascota mascota){
+    public LiveData<Consulta> getConsulta(){
+        if (mConsulta == null){
+            mConsulta = new MutableLiveData<>();
+        }
+        return mConsulta;
+    }
+
+    public void imageUpload(Bitmap bitmap, Mascota mascota, Consulta consulta){
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         String image = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-
-        if(mascota.getId() == 0){
-        String name = "user_"+String.valueOf(Calendar.getInstance().getTimeInMillis());
+        if (consulta.getId() != 0){
+            String name = "comprobante_"+consulta.getId()+"_"+Calendar.getInstance().getTimeInMillis();
+            try {
+                Call<Consulta> call = end.UploadImageConsulta(token,name,image,consulta.getId());
+                call.enqueue(new Callback<Consulta>() {
+                    @Override
+                    public void onResponse(@Nullable Call<Consulta> call, @Nullable Response<Consulta> response) {
+                        if (response != null && response.body() != null) {
+                            Consulta consulta = response.body();
+                            mConsulta.setValue(consulta);
+                            Toast.makeText(context, "Comprobante subido", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(@Nullable Call<Consulta> call, @Nullable Throwable t) {
+                      Log.d("salida 1", t.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("salida 2", e.getMessage());
+            }
+        }
+        else if(mascota.getId() == 0){
+        String name = "user_"+Calendar.getInstance().getTimeInMillis();
         try {
         Call<Cliente> call = end.UploadImage(token,name,image);
         call.enqueue(new Callback<Cliente>() {
             @Override
             public void onResponse(@Nullable Call<Cliente> call, @Nullable Response<Cliente> response) {
                 if (response != null && response.body() != null) {
-                 mImagenCliente.setValue(response.body().getFoto());
+                    Cliente cliente = response.body();
+                    mImagenCliente.setValue(cliente.getFoto());
                 }
             }
 
@@ -84,7 +115,7 @@ public class ArchivosViewModel extends AndroidViewModel {
             Log.d("salida 2", e.getMessage());
         }
     }else{
-        String name = "mascota_"+String.valueOf(Calendar.getInstance().getTimeInMillis());
+        String name = "mascota_"+Calendar.getInstance().getTimeInMillis();
             try {
                 Call<Mascota> call = end.UploadImageMascota(token,name,image,mascota.getId());
                 call.enqueue(new Callback<Mascota>() {

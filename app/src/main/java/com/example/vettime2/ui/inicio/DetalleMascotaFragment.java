@@ -1,7 +1,10 @@
 package com.example.vettime2.ui.inicio;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +31,7 @@ import com.example.vettime2.modelos.Mascota;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DetalleMascotaFragment extends Fragment {
@@ -71,15 +76,66 @@ public class DetalleMascotaFragment extends Fragment {
                 Date fecha = formatoFecha.parse(binding.etFechaMascota.getText().toString());
                 fechaFormato = formatoFechaSql.format(fecha);
             } catch (ParseException e) {
-                throw new RuntimeException(e);
+                Log.e("Error", e.getMessage());
             }
             mascotaEditada.setFechaNacimiento(fechaFormato);
             mViewModel.setMascota(mascotaEditada);
+            Navigation.findNavController(root).navigate(R.id.action_detalleMascotaFragment_to_navigation_dashboard);
         });
 
         binding.ivMascotaPerfil.setOnClickListener(v -> {
             bundle.putSerializable("mascota", mascota);
+            bundle.putString("origen", "mascota");
             Navigation.findNavController(v).navigate(R.id.action_detalleMascotaFragment_to_archivosFragment,bundle);
+        });
+
+        binding.butEliminarM.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Eliminar mascota");
+            builder.setView(R.layout.desea_eliminar);
+            builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                   mViewModel.eliminarMascota(mascota);
+                }
+            });
+            builder.setNegativeButton("Cancelar", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
+        mViewModel.getMascotaEliminada().observe(getViewLifecycleOwner(), mascotaEliminada -> {
+           Navigation.findNavController(binding.getRoot()).navigate(R.id.action_detalleMascotaFragment_to_navigation_dashboard);
+        });
+
+        binding.etFechaMascota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePicker = new DatePickerDialog(requireContext());
+                datePicker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                       binding.etFechaMascota.setText((dayOfMonth)+"-"+(month+1)+"-"+year);
+                    }
+                });
+                datePicker.show();
+            }
+        });
+
+        binding.etFechaMascota.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    DatePickerDialog datePicker = new DatePickerDialog(requireContext());
+                    datePicker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            binding.etFechaMascota.setText((dayOfMonth)+"-"+(month+1)+"-"+year);
+                        }
+                    });
+                    datePicker.show();
+                }
+            }
         });
 
         cargaPerfil(mascota);
@@ -109,7 +165,7 @@ public class DetalleMascotaFragment extends Fragment {
             Date fechaNacimiento = formatoFechaSql.parse(mascota.getFechaNacimiento());
             fecha = formatoFecha.format(fechaNacimiento);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            Log.d("Error", e.getMessage());
         }
         binding.etFechaMascota.setText(fecha);
         binding.etFechaMascota.setEnabled(false);
@@ -122,40 +178,5 @@ public class DetalleMascotaFragment extends Fragment {
         binding.etApellidoMascota.setEnabled(true);
         binding.etFechaMascota.setEnabled(true);
         binding.etPesoMascota.setEnabled(true);
-
-        EditText editTextFecha = binding.etFechaMascota;
-        editTextFecha.setInputType(InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE);
-        editTextFecha.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String inputText = editTextFecha.getText().toString();
-
-                if (inputText.length() != 10) {
-                    editTextFecha.setError("Debe ingresar una fecha valida (DD-MM-YYYY)");
-                } else {
-                    editTextFecha.setError(null);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Obtén el texto ingresado por el usuario
-                String inputText = editTextFecha.getText().toString();
-
-                try {
-                    // Intenta analizar la fecha ingresada
-                    Date fecha = formatoFecha.parse(inputText);
-
-                    // La fecha es válida, puedes realizar cualquier acción adicional aquí
-                } catch (ParseException e) {
-                    // La fecha no es válida, muestra un mensaje de error o realiza una acción apropiada
-                    editTextFecha.setError("Fecha inválida");
-                }
-            }
-        });
     }
     }

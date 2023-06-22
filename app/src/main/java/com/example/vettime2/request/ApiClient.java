@@ -94,6 +94,13 @@ public class ApiClient {
         @FormUrlEncoded
         Call<Mascota> UploadImageMascota(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image, @Field("id") Integer id);
 
+        @POST("Mascotas/eliminar")
+        Call<Mascota> eliminarMascota(@Header("Authorization")String token,@Body Mascota mascota);
+
+        @POST("Consultas/imgupload")
+        @FormUrlEncoded
+        Call<Consulta> UploadImageConsulta(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image, @Field("id") Integer id);
+
     }
 
 }

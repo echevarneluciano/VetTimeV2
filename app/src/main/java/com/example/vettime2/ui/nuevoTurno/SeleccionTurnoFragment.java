@@ -1,12 +1,15 @@
 package com.example.vettime2.ui.nuevoTurno;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentSeleccionTurnoBinding;
+import com.example.vettime2.modelos.Mascota;
 
 public class SeleccionTurnoFragment extends Fragment {
 
@@ -54,7 +59,11 @@ public class SeleccionTurnoFragment extends Fragment {
         });
 
         binding.btConfirmaConsulta.setOnClickListener(v -> {
-           mViewModel.crearConsulta(empleado,binding.spHorario.getSelectedItem().toString(),binding.spMascota.getSelectedItem().toString());
+            try {
+                mViewModel.crearConsulta(empleado,binding.spHorario.getSelectedItem().toString(),binding.spMascota.getSelectedItem().toString());
+            }catch (NullPointerException e){
+                Toast.makeText(getContext(), "Seleccione dia, horario y mascota", Toast.LENGTH_SHORT).show();
+            }
         });
 
         binding.spHorario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -68,6 +77,24 @@ public class SeleccionTurnoFragment extends Fragment {
                     }
                 }
         );
+
+        mViewModel.getConsulta().observe(getViewLifecycleOwner(), consulta -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Comprobante");
+            builder.setView(R.layout.enviar_comprobante);
+            builder.setPositiveButton("Seleccionar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("origen","comprobante");
+                    bundle.putSerializable("consulta",consulta);
+                    Navigation.findNavController(root).navigate(R.id.action_seleccionTurnoFragment_to_archivosFragment,bundle);
+                }
+            });
+            builder.setNegativeButton("Enviar en otro momento", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
 
         mViewModel.setMascotas();
 
