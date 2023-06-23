@@ -101,7 +101,10 @@ public class ApiClient {
         @FormUrlEncoded
         Call<Consulta> UploadImageConsulta(@Header("Authorization")String token,@Field("name") String name, @Field("image") String image, @Field("id") Integer id);
 
-        @GET("Mascotas/uid/{uid}")
+        @POST("Mascotas/AgregarCompartida")
+        Call<Mascota> agregarCompartida(@Header("Authorization")String token,@Body Mascota mascota);
+
+        @GET("Mascotas/ComprobarUid/{uid}")
         Call<Mascota> compruebaUid(@Header("Authorization")String token,@Path("uid") String uid);
 
     }

@@ -18,11 +18,13 @@ import android.widget.TextView;
 
 import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentCompartidaBinding;
+import com.example.vettime2.modelos.Mascota;
 
 public class CompartidaFragment extends Fragment {
 
     private CompartidaViewModel mViewModel;
     private FragmentCompartidaBinding binding;
+    private Mascota mascotaCompartida;
 
     public static CompartidaFragment newInstance() {
         return new CompartidaFragment();
@@ -51,7 +53,8 @@ public class CompartidaFragment extends Fragment {
             builder.setPositiveButton("Es mi mascota", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    binding.btConfirmar.setEnabled(true);
+                    mascotaCompartida = mascota;
                 }
             });
             builder.setNegativeButton("No lo es. Buscar nuevamente", null);
@@ -61,6 +64,14 @@ public class CompartidaFragment extends Fragment {
 
         binding.btComprobar.setOnClickListener(v ->  {
             mViewModel.compruebaUid(binding.etUidEntrada.getText().toString());
+        });
+
+        binding.btConfirmar.setOnClickListener(v -> {
+            mViewModel.agregarCompartida(mascotaCompartida);
+        });
+
+        mViewModel.getMascotaCompartida().observe(getViewLifecycleOwner(), mascota -> {
+           Navigation.findNavController(root).navigate(R.id.action_compartidaFragment_to_mascotasFragment);
         });
 
         return root;
