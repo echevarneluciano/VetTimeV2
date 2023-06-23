@@ -80,13 +80,17 @@ public class NuevaMascotaFragment extends Fragment {
             mascota.setNombre(binding.etNombreMascotaN.getText().toString());
             mascota.setActivo(1);
             mascota.setApellido(binding.etApellidoMascotaN.getText().toString());
+            try {
+                mascota.setPeso(Float.parseFloat(binding.etPesoMascotaN.getText().toString()));
+            }catch (NumberFormatException e){
+                Toast.makeText(getContext(), "Error en formato, verifique peso", Toast.LENGTH_SHORT).show();
+            }
             String fechaFormato = "";
             try {
                 Date fecha = formatoFecha.parse(binding.etFechaMascotaN.getText().toString());
                 fechaFormato = formatoFechaSql.format(fecha);
             } catch (ParseException e) {
                 Toast.makeText(getContext(), "Error en formato, verifique fecha (dd-MM-yyyy)", Toast.LENGTH_SHORT).show();
-                throw new RuntimeException(e);
             }
             mascota.setFechaNacimiento(fechaFormato);
             mViewModel.setmMascota(mascota);

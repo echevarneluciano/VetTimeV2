@@ -25,7 +25,7 @@
 
             <TextView
                 android:id="@+id/tvDetalleDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/tvProfesionalDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tvEstadoDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tvFechaFinDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
@@ -93,7 +93,7 @@
 
             <TextView
                 android:id="@+id/tvFechaIniDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
@@ -157,7 +157,7 @@
 
             <TextView
                 android:id="@+id/tvTurnoNomDetalle"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"

@@ -25,12 +25,12 @@
 
             <EditText
                 android:id="@+id/etPesoMascotaN"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
-                android:text="peso"
                 android:inputType="number"
+                android:text="peso"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etFechaMascotaN" />
 
@@ -47,7 +47,7 @@
 
             <EditText
                 android:id="@+id/etApellidoMascotaN"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="10dp"
@@ -110,7 +110,7 @@
 
             <EditText
                 android:id="@+id/etNombreMascotaN"
-                android:layout_width="160dp"
+                android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="10dp"

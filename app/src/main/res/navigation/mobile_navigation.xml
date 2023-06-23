@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_mascotasFragment_to_nuevaMascotaFragment"
             app:destination="@id/nuevaMascotaFragment" />
+        <action
+            android:id="@+id/action_mascotasFragment_to_compartidaFragment"
+            app:destination="@id/compartidaFragment" />
     </fragment>
     <fragment
         android:id="@+id/nuevaMascotaFragment"
@@ -147,5 +150,14 @@
         <action
             android:id="@+id/action_archivosFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/compartidaFragment"
+        android:name="com.example.vettime2.ui.mascotas.CompartidaFragment"
+        android:label="Mascotas compartidas"
+        tools:layout="@layout/fragment_compartida" >
+        <action
+            android:id="@+id/action_compartidaFragment_to_mascotasFragment"
+            app:destination="@id/mascotasFragment" />
     </fragment>
 </navigation>

@@ -48,6 +48,10 @@ public class MascotasFragment extends Fragment {
             Navigation.findNavController(root).navigate(R.id.action_mascotasFragment_to_nuevaMascotaFragment);
         });
 
+        binding.btCompartirM.setOnClickListener(v -> {
+            Navigation.findNavController(root).navigate(R.id.action_mascotasFragment_to_compartidaFragment);
+        });
+
         mViewModel.setmMascotas();
 
         return root;
