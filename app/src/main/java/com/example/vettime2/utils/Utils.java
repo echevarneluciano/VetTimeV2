@@ -167,8 +167,8 @@ public class Utils {
         LocalTime fin1 = LocalTime.parse(tiempoFin, formatter);
         LocalTime fin = inicio.plusHours(fin1.getHour())
                           .plusMinutes(fin1.getMinute())
-                          .plusSeconds(fin1.getSecond())
-                          .minusMinutes(30);
+                          .plusSeconds(fin1.getSecond());
+                          //.minusMinutes(30);
         inicio = inicio.plusMinutes(30);
         List<String> intervalos = new ArrayList<>();
 

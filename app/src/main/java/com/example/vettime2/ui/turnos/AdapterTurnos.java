@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.example.vettime2.R;
 import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.Mascota;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AdapterTurnos extends RecyclerView.Adapter<AdapterTurnos.ViewHolder> {
@@ -28,6 +32,8 @@ public class AdapterTurnos extends RecyclerView.Adapter<AdapterTurnos.ViewHolder
     private Context context;
     private List<Consulta> consultas;
     private LayoutInflater layoutInflater;
+    private SimpleDateFormat formaoSlida = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    private SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     public AdapterTurnos(Context context, List<Consulta> consultas, LayoutInflater layoutInflater) {
         this.context = context;
@@ -47,7 +53,14 @@ public class AdapterTurnos extends RecyclerView.Adapter<AdapterTurnos.ViewHolder
     public void onBindViewHolder(@NonNull AdapterTurnos.ViewHolder holder, int position) {
 
         holder.nombre.setText(consultas.get(position).getCliente_mascota().getMascota().getNombre());
-        holder.fecha.setText(consultas.get(position).getTiempoInicio());
+
+        try {
+        Date entradaInicio = formatoEntrada.parse(consultas.get(position).getTiempoInicio());
+        String salidaInicio = formaoSlida.format(entradaInicio);
+        holder.fecha.setText(salidaInicio);
+        }catch (ParseException e) {
+            Log.d("Error", e.getMessage());
+        }
 
         Glide.with(context)
                 .load("http://192.168.15.7:5111"+consultas.get(position).getCliente_mascota().getMascota().getFoto())

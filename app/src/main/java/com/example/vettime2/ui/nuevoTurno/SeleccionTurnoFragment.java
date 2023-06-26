@@ -23,12 +23,18 @@ import com.example.vettime2.R;
 import com.example.vettime2.databinding.FragmentSeleccionTurnoBinding;
 import com.example.vettime2.modelos.Mascota;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class SeleccionTurnoFragment extends Fragment {
 
     private SeleccionTurnoViewModel mViewModel;
     private FragmentSeleccionTurnoBinding binding;
     private String empleado;
     private String tarea;
+    private LocalDate fecha;
+    private LocalDateTime fechaHora;
 
     public static SeleccionTurnoFragment newInstance() {
         return new SeleccionTurnoFragment();
@@ -45,6 +51,7 @@ public class SeleccionTurnoFragment extends Fragment {
         tarea = getArguments().getString("tarea");
 
         binding.dtCalendario.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            fecha = LocalDate.of(year, month+1, dayOfMonth);
             mViewModel.setHorarios(dayOfMonth, month+1, year, tarea, empleado);
         });
 
@@ -70,7 +77,11 @@ public class SeleccionTurnoFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedItem = parent.getItemAtPosition(position).toString();
-                        mViewModel.compruebaLapso(selectedItem);
+                        LocalTime tiempo = LocalTime.parse(selectedItem);
+                        int hora = tiempo.getHour();
+                        int minutos = tiempo.getMinute();
+                        fechaHora = fecha.atTime(hora,minutos);
+                        mViewModel.compruebaLapso(selectedItem,fechaHora);
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {

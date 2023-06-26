@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -70,17 +71,23 @@ public class DetalleMascotaFragment extends Fragment {
             mascotaEditada.setId(mascota.getId());
             mascotaEditada.setNombre(binding.etNombreMascota.getText().toString());
             mascotaEditada.setApellido(binding.etApellidoMascota.getText().toString());
-            mascotaEditada.setPeso(Float.parseFloat(binding.etPesoMascota.getText().toString()));
+
+            try {
+                mascotaEditada.setPeso(Float.parseFloat(binding.etPesoMascota.getText().toString()));
+            }catch (NumberFormatException e) {
+                Toast.makeText(this.getContext(), "Peso incorrecto, verifique entrada peso.", Toast.LENGTH_SHORT).show();
+            }
+
             String fechaFormato = "";
             try {
                 Date fecha = formatoFecha.parse(binding.etFechaMascota.getText().toString());
                 fechaFormato = formatoFechaSql.format(fecha);
-            } catch (ParseException e) {
-                Log.e("Error", e.getMessage());
-            }
             mascotaEditada.setFechaNacimiento(fechaFormato);
             mViewModel.setMascota(mascotaEditada);
             Navigation.findNavController(root).navigate(R.id.action_detalleMascotaFragment_to_navigation_dashboard);
+            } catch (ParseException e) {
+                Toast.makeText(this.getContext(), "Fecha incorrecta, verifique entrada fecha de nacimiento.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         binding.ivMascotaPerfil.setOnClickListener(v -> {

@@ -2,6 +2,7 @@ package com.example.vettime2.ui.turnos;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -23,6 +24,7 @@ public class DetalleTurnoViewModel extends AndroidViewModel {
     private ApiClient.EndPointVetTime end;
     private SharedPreferences sp;
     private String token;
+    private MutableLiveData<String> mEstado;
 
     public DetalleTurnoViewModel(@NonNull Application application) {
         super(application);
@@ -32,5 +34,19 @@ public class DetalleTurnoViewModel extends AndroidViewModel {
         token = sp.getString("token","");
     }
 
+    public LiveData<String> getEstado(){
+        if( mEstado == null){
+            mEstado = new MutableLiveData<>();
+        }
+        return mEstado;
+    }
+
+    public void setmEstado(Integer estado){
+        if(estado == 0){
+            mEstado.setValue("Pendiente");
+        }else{
+            mEstado.setValue("Finalizado");
+        }
+    }
 
 }
