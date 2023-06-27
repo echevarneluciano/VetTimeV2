@@ -76,12 +76,16 @@ public class SeleccionTurnoFragment extends Fragment {
         binding.spHorario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        try {
                         String selectedItem = parent.getItemAtPosition(position).toString();
                         LocalTime tiempo = LocalTime.parse(selectedItem);
                         int hora = tiempo.getHour();
                         int minutos = tiempo.getMinute();
                         fechaHora = fecha.atTime(hora,minutos);
                         mViewModel.compruebaLapso(selectedItem,fechaHora);
+                        }catch (NullPointerException e){
+                            Log.e("ERROR", "Error en SeleccionTurnoFragment: " + e.getMessage());
+                        }
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {

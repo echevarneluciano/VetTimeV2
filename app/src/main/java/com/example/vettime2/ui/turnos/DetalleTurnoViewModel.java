@@ -42,7 +42,7 @@ public class DetalleTurnoViewModel extends AndroidViewModel {
     }
 
     public void setmEstado(Integer estado){
-        if(estado == 0){
+        if(estado == 1){
             mEstado.setValue("Pendiente");
         }else{
             mEstado.setValue("Finalizado");

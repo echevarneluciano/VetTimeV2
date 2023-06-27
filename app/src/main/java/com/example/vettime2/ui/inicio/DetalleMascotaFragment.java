@@ -167,6 +167,7 @@ public class DetalleMascotaFragment extends Fragment {
         binding.etNombreMascota.setEnabled(false);
         binding.etApellidoMascota.setText(mascota.getApellido());
         binding.etApellidoMascota.setEnabled(false);
+        binding.tvUid.setText("Uid: "+mascota.getUid());
         String fecha = "";
         try {
             Date fechaNacimiento = formatoFechaSql.parse(mascota.getFechaNacimiento());
