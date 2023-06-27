@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_seleccionTurnoFragment_to_archivosFragment"
             app:destination="@id/archivosFragment" />
+        <action
+            android:id="@+id/action_seleccionTurnoFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
     <fragment
         android:id="@+id/detalleMascotaFragment"

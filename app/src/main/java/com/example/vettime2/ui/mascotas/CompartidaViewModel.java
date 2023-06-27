@@ -64,6 +64,8 @@ public class CompartidaViewModel extends AndroidViewModel {
                     if (response.body() != null) {
                         Mascota mascota = response.body();
                         mMascota.setValue(mascota);
+                    }else {
+                        Toast.makeText(context, "Mascota no encontrada. Verifique UID.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
@@ -88,6 +90,8 @@ public class CompartidaViewModel extends AndroidViewModel {
                         Mascota mascota = response.body();
                         mMascotaCompartida.setValue(mascota);
                         Toast.makeText(context, "Mascota: "+mascota.getNombre()+" agregada a tu lista de mascotas", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(context, "Error, la mascota ya fue agregada anteriormente, verifique nuevamente.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override

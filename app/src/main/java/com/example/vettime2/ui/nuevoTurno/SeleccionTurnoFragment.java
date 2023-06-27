@@ -106,7 +106,12 @@ public class SeleccionTurnoFragment extends Fragment {
                     Navigation.findNavController(root).navigate(R.id.action_seleccionTurnoFragment_to_archivosFragment,bundle);
                 }
             });
-            builder.setNegativeButton("Enviar en otro momento", null);
+            builder.setNegativeButton("Enviar en otro momento", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Navigation.findNavController(root).navigate(R.id.action_seleccionTurnoFragment_to_navigation_dashboard);
+                }
+            });
             AlertDialog dialog = builder.create();
             dialog.show();
         });

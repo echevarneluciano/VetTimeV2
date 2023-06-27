@@ -1,5 +1,7 @@
 package com.example.vettime2.utils;
 
+import android.util.Log;
+
 import com.example.vettime2.modelos.Consulta;
 import com.example.vettime2.modelos.TurnosPorTarea;
 
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,22 +24,32 @@ import java.util.Locale;
 public class Utils {
 
     public String getDate(int anio, int mes, int dia) {
+        try {
         LocalDate date = LocalDate.of(anio, mes, dia);
         Locale locale = Locale.ENGLISH;
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek.getDisplayName(TextStyle.FULL, locale);
+        } catch (DateTimeParseException e) {
+            Log.d("salida 1", e.getMessage());
+            return null;
+        }
     }
 
     public String convertirFechaMysql(int anio, int mes, int dia) {
+        try {
         LocalDate date = LocalDate.of(anio, mes, dia);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String mysqlFormat = date.format(formatter);
         return mysqlFormat;
+        } catch (DateTimeParseException e) {
+            Log.d("salida 1", e.getMessage());
+            return null;
+        }
     }
 
 
     public List<String> getTurnoTarea(List<TurnosPorTarea> tareas, String fecha) {
-
+try {
         List<String> intervalos = new ArrayList<>();
 
         for (TurnosPorTarea tarea : tareas) {
@@ -86,10 +99,15 @@ public class Utils {
         }
         }
         return intervalos;
+    } catch (DateTimeParseException e) {
+    Log.e("Error", e.getMessage());
+    return null;
+    }
 
     }
 
     public List<String> getTurnosEntregados(List<Consulta> consultas) {
+        try {
         List<String> intervalos = new ArrayList<>();
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -109,9 +127,14 @@ public class Utils {
         }
 
         return intervalos;
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            return null;
+        }
     }
 
     public List<String> getTurnosNoEntregados(List<String> disponibles, List<String> entregados) {
+        try {
         List<String> lista1 = new ArrayList<>(entregados);
         List<String> lista2 = new ArrayList<>(disponibles);
         for (String intervalo : lista1) {
@@ -123,10 +146,13 @@ public class Utils {
             }
         }
         return lista2;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String sumaHoraAFechaFin(String time1, String time2,String date) {
-
+try {
         // Obtener objetos LocalTime de las cadenas de hora
         LocalTime hora1 = LocalTime.parse(time1);
         LocalTime hora2 = LocalTime.parse(time2);
@@ -147,21 +173,31 @@ public class Utils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         return resultado.format(formatter);
+        }catch (DateTimeParseException e ){
+         Log.e("Error", e.getMessage());
+        return null;
+}
     }
 
     public String sumaHoraAFecha(String hora   , String fecha) {
 
+        try {
         LocalTime horaParse = LocalTime.parse(hora);
         LocalDate fechaParse = LocalDate.parse(fecha);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         LocalDateTime dateTime = LocalDateTime.of(fechaParse, horaParse);
-
-        return dateTime.format(formatter);
+            return dateTime.format(formatter);
+        }catch (DateTimeParseException e ){
+            Log.e("Error", e.getMessage());
+            return null;
+        }
     }
 
     public List<String> lapsoTarea(String tiempoInicio, String tiempoFin) {
 
+        List<String> intervalos = new ArrayList<>();
+        try {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime inicio = LocalTime.parse(tiempoInicio, formatter);
         LocalTime fin1 = LocalTime.parse(tiempoFin, formatter);
@@ -170,12 +206,13 @@ public class Utils {
                           .plusSeconds(fin1.getSecond());
                           //.minusMinutes(30);
         inicio = inicio.plusMinutes(30);
-        List<String> intervalos = new ArrayList<>();
 
         LocalTime tiempoActual = inicio;
         while (tiempoActual.isBefore(fin)) {
             intervalos.add(tiempoActual.format(formatter));
             tiempoActual = tiempoActual.plusMinutes(30);
+        }}catch (DateTimeParseException e ){
+            Log.d("Error", e.getMessage());
         }
         return intervalos;
     }

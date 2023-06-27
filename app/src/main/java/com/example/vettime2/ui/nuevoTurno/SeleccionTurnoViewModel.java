@@ -211,8 +211,9 @@ public class SeleccionTurnoViewModel extends AndroidViewModel {
 
         List<String> lapsoTarea = new ArrayList<>();
         lapsoTarea = utils.lapsoTarea(hora, tiempoTarea);
+        LocalDateTime actual = LocalDateTime.now();
 
-        if (fechaHora.isBefore(LocalDateTime.now())) {
+        if (fechaHora.isBefore(actual)) {
             Toast.makeText(context, "El horario no puede ser anterior al actual", Toast.LENGTH_SHORT).show();
             return true;
         }
